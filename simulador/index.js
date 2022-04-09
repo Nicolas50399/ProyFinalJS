@@ -100,18 +100,19 @@ function actualizarMejorPago(){
 }
 
 
-//funcion que recibe un array de objetos clase "Jugador" y devuelve sus respectivos nombres
+//Funcion que recibe un array de objetos clase "Jugador" y devuelve sus respectivos nombres
 function nombres(arrayJugadores){
     return arrayJugadores.map((unJugador) => unJugador.nombre);
 }
 
 
-//funcion que recibe un array de objetos clase "Jugador" y devuelve sus respectivos sueldos
+//Funcion que recibe un array de objetos clase "Jugador" y devuelve sus respectivos sueldos
 function sueldos(arrayJugadores){
     return arrayJugadores.map((unJugador) => unJugador.sueldo);
 }
 
 
+//Funcion que recibe un array de sueldos y devuelve el de mayor valor
 function salarioMaximo(arraySueldos){
     let salMax = -999999999;
     arraySueldos.forEach((num) => {
@@ -123,16 +124,19 @@ function salarioMaximo(arraySueldos){
 }
 
 
+//Funcion que recibe un array de jugadores y devuelve el jugador con el sueldo mas alto
 function jugadorSalarioMaximo(arrayJugadores){
     return arrayJugadores.find((unJugador) => unJugador.sueldo == salarioMaximo(sueldos(arrayJugadores)));
 }
 
 
+//Funcion que recibe un array de sueldos y devuelve el resultado de sumarlos todos
 function salarioTotal(arraySueldos){
     return arraySueldos.reduce((acumulador, elemento) => acumulador + elemento, 0);
 }
 
 
+//Funcion que recibe un nombre y un array de jugadores, que devuelve el jugador que coincida con el nombre puesto
 function buscarJugadorPorNombre(arrayJugadores, nomb){
     return arrayJugadores.find(unJugador => unJugador.nombre == nomb);
 }
