@@ -73,6 +73,10 @@ footer{
     color: white;
 }
 
+.sinViñetas{
+    list-style: none;
+}
+
 .nombreEquipo{
     font-size: 500%;
     padding: 3rem 0;

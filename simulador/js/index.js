@@ -65,6 +65,26 @@ function recompensarPorRendimiento(unJugador){
 }
 
 
+//Funcion que pide el nombre del club y modifica una etiqueta HTML
+function pedirNombreClub(){
+    equipo = prompt("Ingrese nombre de su equipo");
+    let nombreEquipo = document.querySelector(".nombreEquipo");
+    nombreEquipo.innerText = equipo;
+}
+
+
+//Funcion que pide datos del dueño y modifica etiquetas HTML
+function pedirDatosDueño(){
+    nombreDueño = prompt("Ingrese nombre del dueño");
+    let nombreD = document.querySelector(".nombreDueño");
+    nombreD.innerText = "Nombre " + nombreDueño;
+
+    plataDueño = parseInt(prompt("Ingrese fondos del club"));
+    let plataD = document.querySelector(".plataDueño");
+    plataD.innerText = "Fondos: $" + plataDueño;
+}
+
+
 //Funcion que pide el nombre del jugador
 function pedirNombreJugador(){
     nombre = prompt("Ingrese nombre del jugador (Para salir, ingresar cadena vacía)");
@@ -254,6 +274,9 @@ function estadisticaParticular(){
 
 //-----------------------------------------------------------------------------MENU--------------------------------------------------------------------------------------------------
 
+let equipo;
+let nombreDueño;
+let plataDueño;
 let nombre;
 let edad;
 let posicion;
@@ -269,9 +292,9 @@ let delanteros = 0;
 
 let listado = "NOMBRE       SALARIO\n";
 const jugadores = [];
-let equipo = prompt("Ingrese nombre de su equipo");
-let nombreEquipo = document.querySelector(".nombreEquipo");
-nombreEquipo.innerHTML = equipo;
+
+pedirNombreClub();
+pedirDatosDueño();
 
 do{
     pedirNombreJugador();
@@ -290,15 +313,18 @@ do{
         actualizarMejorPago();
     }
 }while(nombre != ""); //Para interrumpir el ciclo, no se debe ingresar nada en el nombre del siguiente jugador
-let jdores = document.querySelector(".jugadores");
-let inner = "";
-let contador = 0;
-mostrarJugadores();
 
 
 const infractores = jugadores.filter((unJugador) => !unJugador.buenaConducta());
 const rendidores = jugadores.filter((unJugador) => unJugador.buenRendimiento());
 const estrellas = jugadores.filter((unJugador) => unJugador.buenRendimiento() && unJugador.buenaConducta() && unJugador.esJoven());
+
+estadisticaParticular();
+
+let jdores = document.querySelector(".jugadores");
+let inner = "";
+let contador = 0;
+mostrarJugadores();
 
 mostrarResultados();
 
@@ -307,4 +333,4 @@ mostrarBotones();
 jdores.innerHTML = inner;
 document.main.appendChild(jdores);
 
-estadisticaParticular();
+
