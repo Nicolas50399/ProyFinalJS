@@ -78,7 +78,26 @@ function pedirNombreJugador(){
 //Funcion que pide salario, rendimiento e infracciones del jugador
 function pedirEstadisticasJugador(){
     edad = parseInt(prompt("Ingrese edad del jugador"));
-    posicion = prompt("Ingrese posicion del jugador\n-ARQUERO\n-DEFENSOR\n-VOLANTE\n-DELANTERO\n").toUpperCase();
+    let opcion = parseInt(prompt("Ingrese posicion del jugador\n1-ARQUERO\n2-DEFENSOR\n3-VOLANTE\n4-DELANTERO\n"));
+    switch(opcion){
+        case 1: 
+            posicion="ARQUERO";
+            arqueros++;
+            break;
+        case 2: 
+            posicion="DEFENSOR";
+            defensores++;
+            break;
+        case 3: 
+            posicion="VOLANTE";
+            volantes++;
+            break;
+        case 4: 
+            posicion="DELANTERO";
+            delanteros++;
+            break;
+        default: break;
+    }
     partidos = parseInt(prompt("Ingrese partidos del jugador"));
     promedio = parseFloat(prompt("Ingrese promedio del jugador"));
     sueldo = parseInt(prompt("Ingrese salario del jugador"));
@@ -142,16 +161,47 @@ function buscarJugadorPorNombre(arrayJugadores, nomb){
 }
 
 
-//Funcion que muestra por pantalla los resultados finales: jugador con mejor salario, el promedio de sueldo y la clasificacion de jugadores mediante arrays
+//Funcion que muestra un listado de jugadores ingresados en la pagina
+function mostrarJugadores(){
+    for (const j of jugadores){
+        contador++;
+        inner += `<div class="jugador">
+                    <h2>${j.nombre}</h2>
+                    <p>${j.edad} años</p>
+                    <p>${j.posicion}</p>
+                    <p>Sueldo: $${j.sueldo}</p>
+                    <button id="borrar${contador} type="button" class="btn btn-danger">Borrar jugador</button>
+                    </div><br><br>`;
+    }
+}
+
+
+//Funcion que muestra botones de "agregar jugadores" y "terminar equipo" en la pagina
+function mostrarBotones(){
+    inner += `<button type="button" class="botonTerminarEquipo btn btn-secondary">Agregar jugadores</button>`;
+    if(arqueros>=1 && defensores>=4 && volantes>=3 && delanteros>=3){
+        inner += `<button type="button" class="botonTerminarEquipo btn btn-success">Terminar Equipo</button>`;
+    }
+}
+
+
+//Funcion que muestra en la pagina los resultados finales: jugador con mejor salario, el promedio de sueldo y la clasificacion de jugadores mediante arrays
 function mostrarResultados(){
-    alert(listado);
+    /*alert(listado);
     alert("El jugador mejor pago fue " + (jugadorSalarioMaximo(jugadores)).nombre + ", con un salario de $" + jugadorSalarioMaximo(jugadores).sueldo);
     
     alert("El promedio de sueldo de todos los jugadores es de $" + (salarioTotal(sueldos(jugadores)) / jugadores.length));
     alert("Jugadores ingresados: " + (nombres(jugadores)).join(", ") + "\n\n" +
             "Jugadores rendidores: " + (nombres(rendidores)).join(", ") + "\n" +
             "Jugadores infractores: " + (nombres(infractores)).join(", ") + "\n\n" +
-            "POSIBLES ESTRELLAS EN EL FUTURO: " + (nombres(estrellas)).join(", "));
+            "POSIBLES ESTRELLAS EN EL FUTURO: " + (nombres(estrellas)).join(", "));*/
+    inner += `<p class="resultadosText">El jugador mejor pago es ${(jugadorSalarioMaximo(jugadores)).nombre}, con un salario de $ ${jugadorSalarioMaximo(jugadores).sueldo}</p><br>
+            <p class="resultadosText">El promedio de sueldo de todos los jugadores es de $ ${(salarioTotal(sueldos(jugadores)) / jugadores.length)}</p><br><br>
+            <p>Jugadores ingresados: ${(nombres(jugadores)).join(", ")}</p><br>
+            <p class="resultadosText">Jugadores rendidores: ${(nombres(rendidores)).join(", ")}</p><br>
+            <p class="resultadosText">Jugadores infractores: ${(nombres(infractores)).join(", ")}</p><br>
+            <p class="resultadosText">POSIBLES ESTRELLAS EN EL FUTURO: ${(nombres(estrellas)).join(", ")}</p><br>`;
+    
 
 }
 
@@ -211,10 +261,18 @@ let partidos;
 let promedio;
 let sueldo;
 let infracciones;
+let arqueros = 0;
+let defensores = 0;
+let volantes = 0;
+let delanteros = 0;
 
 
 let listado = "NOMBRE       SALARIO\n";
 const jugadores = [];
+let equipo = prompt("Ingrese nombre de su equipo");
+let nombreEquipo = document.querySelector(".nombreEquipo");
+nombreEquipo.innerHTML = equipo;
+
 do{
     pedirNombreJugador();
     if(nombre != ""){
@@ -232,6 +290,10 @@ do{
         actualizarMejorPago();
     }
 }while(nombre != ""); //Para interrumpir el ciclo, no se debe ingresar nada en el nombre del siguiente jugador
+let jdores = document.querySelector(".jugadores");
+let inner = "";
+let contador = 0;
+mostrarJugadores();
 
 
 const infractores = jugadores.filter((unJugador) => !unJugador.buenaConducta());
@@ -239,4 +301,10 @@ const rendidores = jugadores.filter((unJugador) => unJugador.buenRendimiento());
 const estrellas = jugadores.filter((unJugador) => unJugador.buenRendimiento() && unJugador.buenaConducta() && unJugador.esJoven());
 
 mostrarResultados();
+
+mostrarBotones();
+
+jdores.innerHTML = inner;
+document.main.appendChild(jdores);
+
 estadisticaParticular();

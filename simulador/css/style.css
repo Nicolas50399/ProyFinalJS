@@ -1,0 +1,99 @@
+*{
+    text-align: center;
+    font-family:Arial, Helvetica, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    color: white;
+}
+
+body{
+    background-color: black;
+}
+
+
+
+header{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.logo{
+    width: 10%;
+}
+
+.navegador{
+    width: 90%;
+}
+
+.color1{
+    color: #0A2BE0;
+}
+.color2{
+    color: #420C8A;
+}
+
+main{
+    background-image: linear-gradient(to right, #0A2BE0, #420C8A);
+}
+
+.tituloPrincipal{
+    font-size: 300%;
+    padding: 2rem 0;
+}
+
+.parrafo{
+    padding: 1rem 15% 4rem 15%;
+}
+
+.tituloSecundario{
+    font-size: 250%;
+    padding: 2rem 0;
+}
+
+.listado{
+    list-style: none;
+}
+
+
+
+footer{
+    background-color: black;
+    margin: 0;
+}
+
+.listadoFooter{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.listadoFooter a{
+    color: white;
+}
+
+.nombreEquipo{
+    font-size: 500%;
+    padding: 3rem 0;
+}
+
+.jugadores{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jugador{
+    border: 2px solid white;
+    width: 60%;
+}
+
+.resultadosText{
+    font-size: 200%;
+    color: black;
+}
+
+.botonTerminarEquipo{
+    width: 20%;
+}
