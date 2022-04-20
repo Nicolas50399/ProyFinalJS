@@ -66,22 +66,39 @@ function recompensarPorRendimiento(unJugador){
 
 
 //Funcion que pide el nombre del club y modifica una etiqueta HTML
-function pedirNombreClub(){
-    equipo = prompt("Ingrese nombre de su equipo");
+function asignarNombreClub(nombre){
+
+    //equipo = prompt("Ingrese nombre de su equipo");
     let nombreEquipo = document.querySelector(".nombreEquipo");
-    nombreEquipo.innerText = equipo;
+    nombreEquipo.innerText = nombre;
 }
 
 
 //Funcion que pide datos del dueño y modifica etiquetas HTML
-function pedirDatosDueño(){
-    nombreDueño = prompt("Ingrese nombre del dueño");
+function asignarDatosDueño(nombre, plata){
+    //nombreDueño = prompt("Ingrese nombre del dueño");
     let nombreD = document.querySelector(".nombreDueño");
-    nombreD.innerText = "Nombre " + nombreDueño;
+    nombreD.innerText = "Nombre: " + nombre;
 
-    plataDueño = parseInt(prompt("Ingrese fondos del club"));
+    //plataDueño = parseInt(prompt("Ingrese fondos del club"));
     let plataD = document.querySelector(".plataDueño");
-    plataD.innerText = "Fondos: $" + plataDueño;
+    plataD.innerText = "Fondos: $" + plata;
+}
+
+
+function formularioDelClub(){
+    let formularioClub = document.querySelector("#formularioClub");
+    formularioClub.addEventListener("submit", validarFormularioClub);
+}
+
+
+function validarFormularioClub(e){
+    e.preventDefault();
+    let formulario = e.target;
+    asignarNombreClub(formulario.children[0].value);
+    asignarDatosDueño(formulario.children[1].value, formulario.children[2].value);
+    let botonConfirmarClub = document.querySelector("#botonConfirmarClub");
+    botonConfirmarClub.classList.add("disabled");
 }
 
 
@@ -125,10 +142,43 @@ function pedirEstadisticasJugador(){
 }
 
 
-//Funcion que va listando jugadores con su sueldo
-function actualizarListado(){
-    listado += (nombre + "              $" + sueldo + "\n");
+function borrarContenidoFormJugador(){
+    const inputsJugador = document.querySelectorAll(".inputJugador");
+    inputsJugador.forEach(inputJ => {
+        inputJ.value = "";
+    })
 }
+
+
+function formularioDeJugador(){
+    let formularioJugador = document.querySelector("#formularioJugador");
+    formularioJugador.addEventListener("submit", validarFormularioJugador);
+}
+
+function validarFormularioJugador(e){
+    e.preventDefault();
+
+    nombre = document.querySelector("#nombreJug").value;
+    edad = document.querySelector("#edadJug").value;
+    posicion = document.querySelector("#posicionJug").value;
+    partidos = document.querySelector("#partidosJug").value;
+    partidos = document.querySelector("#promedioJug").value;
+    sueldo = document.querySelector("#sueldoJug").value;
+    infracciones = document.querySelector("#infraccionesJug").value;
+
+    borrarContenidoFormJugador();
+
+    const jugador = new Jugador(nombre, edad, posicion, partidos, promedio, sueldo, infracciones);
+    recompensarPorRendimiento(jugador);
+    sueldo = restarPorInfracciones(sueldo, infracciones);
+    const jugadorActualizado = new Jugador(nombre, edad, posicion, partidos, promedio, sueldo, infracciones);
+    jugadores.push(jugadorActualizado);
+
+    
+    actualizarMejorPago();
+    
+}
+
 
 
 //Funcion que actualiza el jugador mejor pagado, con su cifra correspondiente
@@ -215,14 +265,18 @@ function mostrarResultados(){
             "Jugadores rendidores: " + (nombres(rendidores)).join(", ") + "\n" +
             "Jugadores infractores: " + (nombres(infractores)).join(", ") + "\n\n" +
             "POSIBLES ESTRELLAS EN EL FUTURO: " + (nombres(estrellas)).join(", "));*/
+    mostrarJugadores();
     inner += `<p class="resultadosText">El jugador mejor pago es ${(jugadorSalarioMaximo(jugadores)).nombre}, con un salario de $ ${jugadorSalarioMaximo(jugadores).sueldo}</p><br>
             <p class="resultadosText">El promedio de sueldo de todos los jugadores es de $ ${(salarioTotal(sueldos(jugadores)) / jugadores.length)}</p><br><br>
             <p>Jugadores ingresados: ${(nombres(jugadores)).join(", ")}</p><br>
             <p class="resultadosText">Jugadores rendidores: ${(nombres(rendidores)).join(", ")}</p><br>
             <p class="resultadosText">Jugadores infractores: ${(nombres(infractores)).join(", ")}</p><br>
             <p class="resultadosText">POSIBLES ESTRELLAS EN EL FUTURO: ${(nombres(estrellas)).join(", ")}</p><br>`;
-    
+    mostrarBotones();
 
+    let jdores = document.querySelector(".jugadores");
+    jdores.innerHTML = inner;
+    document.main.appendChild(jdores);
 }
 
 
@@ -293,9 +347,8 @@ let delanteros = 0;
 let listado = "NOMBRE       SALARIO\n";
 const jugadores = [];
 
-pedirNombreClub();
-pedirDatosDueño();
-
+formularioDelClub();
+/*
 do{
     pedirNombreJugador();
     if(nombre != ""){
@@ -312,25 +365,28 @@ do{
         actualizarListado();
         actualizarMejorPago();
     }
-}while(nombre != ""); //Para interrumpir el ciclo, no se debe ingresar nada en el nombre del siguiente jugador
+}while(nombre != ""); //Para interrumpir el ciclo, no se debe ingresar nada en el nombre del siguiente jugador*/
+
+
+formularioDeJugador();
+
+
 
 
 const infractores = jugadores.filter((unJugador) => !unJugador.buenaConducta());
 const rendidores = jugadores.filter((unJugador) => unJugador.buenRendimiento());
 const estrellas = jugadores.filter((unJugador) => unJugador.buenRendimiento() && unJugador.buenaConducta() && unJugador.esJoven());
 
-estadisticaParticular();
+//estadisticaParticular();
 
-let jdores = document.querySelector(".jugadores");
+
 let inner = "";
 let contador = 0;
-mostrarJugadores();
 
-mostrarResultados();
+let botonTerminarJugadores = document.querySelector("#botonConfirmarJugs");
+botonTerminarJugadores.addEventListener("click", mostrarResultados);
 
-mostrarBotones();
 
-jdores.innerHTML = inner;
-document.main.appendChild(jdores);
+
 
 
