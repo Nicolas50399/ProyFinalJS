@@ -118,3 +118,42 @@ footer{
     flex-direction: column;
     align-items: center;
 }
+
+#menuModificarJugadores{
+    display: none;
+}
+
+.sueldoBajo{
+    color: yellow;
+}
+.sueldoMuyBajo{
+    color: red;
+}
+
+#contenedorJugadores{
+    display: grid;
+    grid-template-areas: 
+        "formularioJ formularioJ"
+        "cantidades listaJ"
+        "confirmarJ confirmarJ";
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 2fr auto 1fr;
+    align-items: center;
+}
+
+#cantidades{
+    grid-area: cantidades;
+    /*background-color: aqua;*/
+}
+#formJugador{
+    grid-area: formularioJ;
+    /*background-color: greenyellow;*/
+}
+#listaJugadores{
+    grid-area: listaJ;
+    /*background-color: white;*/
+}
+#confJugadores{
+    grid-area: confirmarJ;
+    /*background-color: yellow;*/
+}

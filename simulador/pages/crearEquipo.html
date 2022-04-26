@@ -55,40 +55,55 @@
             <li>3 volantes</li>
             <li>3 delanteros</li>
         </ul>
-        <form id="formularioClub">
-          <input id="nombreEq" class="form-control inputForm" type="text" placeholder="Nombre del Equipo">
-          <input id="nombreDue" class="form-control inputForm" type="text" placeholder="Nombre del Dueño">
-          <input id="plataDue" class="form-control inputForm" type="number" placeholder="Fondos del Dueño">
-          <button id="botonConfirmarClub" type="button submit" class="btn btn-dark">Confirmar Equipo</button>
-        </form>
+        <section id="menuModificarClub">
+          <form id="formularioClub">
+            <input id="nombreEq" class="form-control inputForm" type="text" placeholder="Nombre del Equipo">
+            <input id="nombreDue" class="form-control inputForm" type="text" placeholder="Nombre del Dueño">
+            <input id="plataDue" class="form-control inputForm" type="number" placeholder="Fondos del Dueño">
+            <button id="botonConfirmarClub" type="button submit" class="btn btn-dark">Confirmar Equipo</button>
+          </form>
+        </section>
         
         
+        <section id="menuModificarJugadores">
+          <h2 class="nombreEquipo">NOMBRE DEL EQUIPO</h2>
 
-        <h2 class="nombreEquipo">NOMBRE DEL EQUIPO</h2>
+          <h2>DUEÑO</h2>
+          <p class="nombreDueño">Nombre: </p>
+          <p class="plataDueño">Fondos: </p>
 
-        <h2>DUEÑO</h2>
-        <p class="nombreDueño">Nombre: </p>
-        <p class="plataDueño">Fondos: </p>
+          <div id="contenedorJugadores">
+            <div id="cantidades">
+              <h2 class="cantArqueros">Arqueros: 0</h2>
+              <h2 class="cantDefensores">Defensores: 0</h2>
+              <h2 class="cantVolantes">Volantes: 0</h2>
+              <h2 class="cantDelanteros">Delanteros: 0</h2>
+              <h2 class="sueldoTotal">Sueldo total: $0</h2>
+              <h2 class="sueldoDisponible">Sueldo disponible: $0</h2>
+            </div>
 
-        <h2>JUGADORES</h2>
+            <div id="formJugador">
+              <form id="formularioJugador">
+                <input id="nombreJug" class="form-control inputForm inputJugador" type="text" placeholder="Nombre del Jugador">
+                <input id="edadJug" class="form-control inputForm inputJugador" type="number" placeholder="Edad del Jugador">
+                1.ARQUERO   2.DEFENSOR   3.VOLANTE   4.DELANTERO
+                <input id="posicionJug" class="form-control inputForm inputJugador" type="number" placeholder="Posicion del Jugador">
+                <input id="sueldoJug" class="form-control inputForm inputJugador" type="number" placeholder="Sueldo del Jugador">
+                <button id="botonConfirmarJug" type="button submit" class="btn btn-dark">Confirmar Jugador</button>
+              </form>
+            </div>
 
-        <form id="formularioJugador">
-          <input id="nombreJug" class="form-control inputForm inputJugador" type="text" placeholder="Nombre del Jugador">
-          <input id="edadJug" class="form-control inputForm inputJugador" type="number" placeholder="Edad del Jugador">
-          1.ARQUERO   2.DEFENSOR   3.VOLANTE   4.DELANTERO
-          <input id="posicionJug" class="form-control inputForm inputJugador" type="number" placeholder="Partidos del Jugador">
-          <input id="partidosJug" class="form-control inputForm inputJugador" type="number" placeholder="Partidos del Jugador">
-          <input id="promedioJug" class="form-control inputForm inputJugador" type="number" placeholder="Promedio del Jugador">
-          <input id="sueldoJug" class="form-control inputForm inputJugador" type="number" placeholder="Sueldo del Jugador">
-          <input id="infraccionesJug" class="form-control inputForm inputJugador" type="number" placeholder="Infracciones del Jugador">
-          <button id="botonConfirmarJug" type="button submit" class="btn btn-dark">Confirmar Jugador</button>
-        </form>
-
-        <button id="botonConfirmarJugs" type="button" class="btn btn-warning">Confirmar jugadores</button>
-
-        <div class="jugadores">
+            <div id="listaJugadores">
+              <h2>JUGADORES</h2>
+              <div class="jugadores">
             
-        </div>
+              </div>
+            </div>
+          </div>
+          <div id="confJugadores">
+            <button id="botonConfirmarJugs" type="button" class="btn btn-success disabled">Confirmar jugadores</button>
+          </div>
+        </section>
     </main>
     <footer>
         <ul class="listadoFooter">

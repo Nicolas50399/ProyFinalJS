@@ -44,6 +44,17 @@ class Jugador {
 
 }
 
+class JugadorIngresado{
+
+    constructor(nombre, edad, posicion, sueldo){
+        this.nombre = nombre;
+        this.edad = edad;
+        this.posicion = posicion;
+        this.sueldo = sueldo;
+    }
+
+}
+
 
 //--------------------------------------------------------------------FUNCIONES------------------------------------------------------------------------------------------------------
 
@@ -97,8 +108,12 @@ function validarFormularioClub(e){
     let formulario = e.target;
     asignarNombreClub(formulario.children[0].value);
     asignarDatosDueño(formulario.children[1].value, formulario.children[2].value);
-    let botonConfirmarClub = document.querySelector("#botonConfirmarClub");
-    botonConfirmarClub.classList.add("disabled");
+    //let botonConfirmarClub = document.querySelector("#botonConfirmarClub");
+    //botonConfirmarClub.classList.add("disabled");
+    document.querySelector("#menuModificarClub").style.display = "none";
+    document.querySelector(".sueldoDisponible").innerHTML = `Sueldo disponible: $${formulario.children[2].value}`;
+    sueldoDisponible = formulario.children[2].value;
+    document.querySelector("#menuModificarJugadores").style.display = "block";
 }
 
 
@@ -119,19 +134,15 @@ function pedirEstadisticasJugador(){
     switch(opcion){
         case 1: 
             posicion="ARQUERO";
-            arqueros++;
             break;
         case 2: 
             posicion="DEFENSOR";
-            defensores++;
             break;
         case 3: 
             posicion="VOLANTE";
-            volantes++;
             break;
         case 4: 
             posicion="DELANTERO";
-            delanteros++;
             break;
         default: break;
     }
@@ -140,7 +151,6 @@ function pedirEstadisticasJugador(){
     sueldo = parseInt(prompt("Ingrese salario del jugador"));
     infracciones = parseInt(prompt("Ingrese infracciones del jugador"));
 }
-
 
 function borrarContenidoFormJugador(){
     const inputsJugador = document.querySelectorAll(".inputJugador");
@@ -161,21 +171,32 @@ function validarFormularioJugador(e){
     nombre = document.querySelector("#nombreJug").value;
     edad = document.querySelector("#edadJug").value;
     posicion = document.querySelector("#posicionJug").value;
-    partidos = document.querySelector("#partidosJug").value;
-    partidos = document.querySelector("#promedioJug").value;
     sueldo = document.querySelector("#sueldoJug").value;
-    infracciones = document.querySelector("#infraccionesJug").value;
 
     borrarContenidoFormJugador();
 
-    const jugador = new Jugador(nombre, edad, posicion, partidos, promedio, sueldo, infracciones);
+    if(sueldoDisponible >= sueldo){
+        const ingresante = new JugadorIngresado(nombre, edad, posicion, sueldo);
+        ingresantes.push(ingresante);
+
+        actualizarCantidades();
+        actualizarListaJugadores();
+        actualizarMejorPago();
+        actualizarBotonConfirmar();
+    }
+
+    else{
+        alert("Error: Saldo del club insuficiente para meter al jugador")
+    }
+
+    
+
+
+    /*const jugador = new Jugador(nombre, edad, posicion, partidos, promedio, sueldo, infracciones);
     recompensarPorRendimiento(jugador);
     sueldo = restarPorInfracciones(sueldo, infracciones);
     const jugadorActualizado = new Jugador(nombre, edad, posicion, partidos, promedio, sueldo, infracciones);
-    jugadores.push(jugadorActualizado);
-
-    
-    actualizarMejorPago();
+    jugadores.push(jugadorActualizado);*/
     
 }
 
@@ -185,6 +206,60 @@ function validarFormularioJugador(e){
 function actualizarMejorPago(){
     if(sueldo > salarioMaximo){
         jugadorSalarioMaximo = nombre;
+    }
+}
+
+
+function actualizarCantidades(){
+    if(posicion == 1){
+        posicion = "ARQUERO";
+        arqueros++;
+        document.querySelector(".cantArqueros").innerHTML = `Arqueros: ${arqueros}`;
+    }
+    else if(posicion == 2){
+        posicion = "DEFENSOR";
+        defensores++;
+        document.querySelector(".cantDefensores").innerHTML = `Defensores: ${defensores}`;
+    }
+    else if(posicion == 3){
+        posicion = "VOLANTE";
+        volantes++;
+        document.querySelector(".cantVolantes").innerHTML = `Volantes: ${volantes}`;
+    }
+    else {
+        posicion = "DELANTERO";
+        delanteros++;
+        document.querySelector(".cantDelanteros").innerHTML = `Delanteros: ${delanteros}`;
+    }
+    sueldoTotal += parseInt(sueldo);
+    document.querySelector(".sueldoTotal").innerHTML = `Sueldo total: $${sueldoTotal}`;
+    sueldoDisponible -= sueldo;
+    document.querySelector(".sueldoDisponible").innerHTML = `Sueldo disponible: $${sueldoDisponible}`;
+    if(sueldoDisponible <= 10000){
+        document.querySelector(".sueldoDisponible").classList.add("sueldoBajo");
+        if(sueldoDisponible <= 5000){
+            document.querySelector(".sueldoDisponible").classList.add("sueldoMuyBajo");
+        }
+    }
+}
+
+
+function actualizarListaJugadores(){
+    contador++;
+    innerListado += `<div class="jugador">
+                <h2>${nombre}</h2>
+                <p>${edad} años</p>
+                <p>${posicion}</p>
+                <p>Sueldo: $${sueldo}</p>
+                <button id="borrar${contador} type="button" class="btn btn-danger">Borrar jugador</button>
+                </div><br>`;
+    jdores.innerHTML = innerListado;
+}
+
+
+function actualizarBotonConfirmar(){
+    if(arqueros>=1 && defensores>=4 && volantes>=3 && delanteros>=3){
+        document.querySelector("#botonConfirmarJugs").classList.remove("disabled");
     }
 }
 
@@ -342,10 +417,15 @@ let arqueros = 0;
 let defensores = 0;
 let volantes = 0;
 let delanteros = 0;
+let sueldoTotal = parseInt(0);
+let sueldoDisponible = parseInt(0);
 
 
 let listado = "NOMBRE       SALARIO\n";
 const jugadores = [];
+const ingresantes = [];
+let innerListado = "";
+let jdores = document.querySelector(".jugadores");
 
 formularioDelClub();
 /*
