@@ -12,9 +12,7 @@ const restarPorInfracciones = (salario, faltas) => salario - 4000 * faltas;
 function recompensarPorRendimiento(unJugador){
     if(unJugador.buenRendimiento()){
         sueldo = agregarBonoRendimiento(sueldo);
-        if(unJugador.esJoven()){
-            sueldo = agregarBonoJuventud(sueldo);
-        }
+        unJugador.esJoven() && (sueldo = agregarBonoJuventud(sueldo));
     }
 }
 
@@ -46,8 +44,14 @@ function formularioDelClub(){
 function validarFormularioClub(e){
     e.preventDefault();
     let formulario = e.target;
-    asignarNombreClub(formulario.children[0].value);
+
+    asignarNombreClub(formulario.children[0].value || "Sociedad Anónima"); //OPERADOR LOGICO OR
     asignarDatosDueño(formulario.children[1].value, formulario.children[2].value);
+
+    nombreClub = formulario.children[0].value;
+    nombreDueño = formulario.children[1].value;
+    plataDueño = formulario.children[2].value;
+    
     document.querySelector("#menuModificarClub").style.display = "none";
     document.querySelector(".sueldoDisponible").innerHTML = `Sueldo disponible: $${formulario.children[2].value}`;
     sueldoDisponible = formulario.children[2].value;
@@ -55,50 +59,31 @@ function validarFormularioClub(e){
 }
 
 
-//Funcion que pide el nombre del jugador
-function pedirNombreJugador(){
-    nombre = prompt("Ingrese nombre del jugador (Para salir, ingresar cadena vacía)");
-    while(jugadores.includes(nombre)){
-        alert("ERROR. El nombre ingresado ya esta en el sistema");
-        nombre = prompt("Ingrese nombre del jugador (Para salir, ingresar cadena vacía)");
-    }
+function borrarJugador(){
+    document.querySelector("#eliminarJug").style.width = "60%";
+     document.querySelector("#formularioBorrarJugador").addEventListener("submit", chequearQuiteJugador);
 }
 
-
-//Funcion que pide salario, rendimiento e infracciones del jugador
-function pedirEstadisticasJugador(){
-    edad = parseInt(prompt("Ingrese edad del jugador"));
-    let opcion = parseInt(prompt("Ingrese posicion del jugador\n1-ARQUERO\n2-DEFENSOR\n3-VOLANTE\n4-DELANTERO\n"));
-    switch(opcion){
-        case 1: 
-            posicion="ARQUERO";
-            break;
-        case 2: 
-            posicion="DEFENSOR";
-            break;
-        case 3: 
-            posicion="VOLANTE";
-            break;
-        case 4: 
-            posicion="DELANTERO";
-            break;
-        default: break;
-    }
-    partidos = parseInt(prompt("Ingrese partidos del jugador"));
-    promedio = parseFloat(prompt("Ingrese promedio del jugador"));
-    sueldo = parseInt(prompt("Ingrese salario del jugador"));
-    infracciones = parseInt(prompt("Ingrese infracciones del jugador"));
+function chequearQuiteJugador(e){
+    e.preventDefault();
+    (document.querySelector("#eliminarJug").value <= id)? quitarJugador() : jugadorNoEncontrado();
+    document.querySelector("#eliminarJug").value = "";
 }
 
-
-function eliminarJugador(){
-    let idBorrar;
-    
-    document.querySelector(`#borrar${idBorrar}`).addEventListener("click", quitarJugador);
+function jugadorNoEncontrado(){
+    alert("Error, el id de jugador no esta en la lista");
 }
 
 function quitarJugador(){
-    jdores.innerHTML="";
+
+    ingresantes.splice(posicionIngresanteABorrar(document.querySelector("#eliminarJug").value), 1);
+    actualizarListaJugadores();
+}
+
+function posicionIngresanteABorrar(idIngresante){
+    const ingresanteABorrar = ingresantes.find((unIngresante) => unIngresante.id == idIngresante);
+    actualizarCantidades(ingresanteABorrar, "restar");
+    return ingresantes.indexOf(ingresanteABorrar);
 }
 
 function borrarContenidoFormJugador(){
@@ -125,87 +110,132 @@ function validarFormularioJugador(e){
 
     borrarContenidoFormJugador();
 
-    if(sueldoDisponible >= sueldo){
-        const ingresante = new JugadorIngresado(nombre, edad, posicion, sueldo);
-        ingresantes.push(ingresante);
-
-        actualizarCantidades();
-        actualizarListaJugadores();
-        actualizarMejorPago();
-        actualizarBotonConfirmar();
-        //eliminarJugador();
-    }
-
-    else{
-        alert("Error: Saldo del club insuficiente para meter al jugador")
-    }
-
-    
-    
+    (sueldoDisponible >= sueldo) ? listarIngresante() : saldoInsuficiente();
 }
 
 
+const desestructurarIngresante = ( {nombre, sueldo} ) => console.log(nombre, sueldo);
+
+//Funcion que devuelve el integrante 7, el del numero de la suerte
+function loguearIngresanteDeLaSuerte(arrayIngresantes){
+    const [,,,,,,i] = arrayIngresantes;
+    console.log(i);
+}
+
+
+function listarIngresante(){
+    const ingresante = new JugadorIngresado(id, nombre, edad, posicion, sueldo);
+    id++;
+    //DESESTRUCTURACION DEL OBJETO INGRESANTE
+    desestructurarIngresante(ingresante);
+
+
+    ingresantes.push(ingresante);
+
+    //DESESTRUCTURACION DEL ARRAY DE INGRESANTES
+    loguearIngresanteDeLaSuerte(ingresantes);
+
+    actualizarCantidades(ingresante, "sumar");
+    actualizarListaJugadores();
+    actualizarMejorPago();
+
+    //SPREAD DE ARRAY DE EDADES DE INGRESANTES
+    //actualizarIngresanteMasVeterano(ingresantes);
+
+
+
+    actualizarBotonConfirmar();
+    //eliminarJugador();
+}
+
+
+function saldoInsuficiente(){
+    alert("Error: Saldo del club insuficiente para meter al jugador")
+}
+
+function actualizarIngresanteMasVeterano(arrayIngresantes){
+    elMasVeterano = arrayIngresantes.find((unIngresante) => unIngresante.edad == edadMaxima(arrayIngresantes));
+}
+
+
+function edadMaxima(arrayIngresantes){
+    return Math.max(edades(...arrayIngresantes));
+}
 
 //Funcion que actualiza el jugador mejor pagado, con su cifra correspondiente
 function actualizarMejorPago(){
-    if(sueldo > salarioMaximo){
-        jugadorSalarioMaximo = nombre;
-    }
+    sueldo > salarioMaximo && (jugadorSalarioMaximo = nombre);
 }
 
 
-function actualizarCantidades(){
-    if(posicion == 1){
-        posicion = "ARQUERO";
-        arqueros++;
+function actualizarCantidades(jugIngresado, operacion){
+    if(jugIngresado.posicion == 1){
+        (operacion == "sumar")? arqueros++ : arqueros--;
         document.querySelector(".cantArqueros").innerHTML = `Arqueros: ${arqueros}`;
     }
-    else if(posicion == 2){
-        posicion = "DEFENSOR";
-        defensores++;
+    else if(jugIngresado.posicion == 2){
+        (operacion == "sumar")? defensores++ : defensores--;
         document.querySelector(".cantDefensores").innerHTML = `Defensores: ${defensores}`;
     }
-    else if(posicion == 3){
-        posicion = "VOLANTE";
-        volantes++;
+    else if(jugIngresado.posicion == 3){
+        (operacion == "sumar")? volantes++ : volantes--;
         document.querySelector(".cantVolantes").innerHTML = `Volantes: ${volantes}`;
     }
     else {
-        posicion = "DELANTERO";
-        delanteros++;
+        (operacion == "sumar")? delanteros++ : delanteros--;
         document.querySelector(".cantDelanteros").innerHTML = `Delanteros: ${delanteros}`;
     }
-    sueldoTotal += parseInt(sueldo);
+    (operacion == "sumar")? sueldoTotal += parseInt(jugIngresado.sueldo) : sueldoTotal -= parseInt(jugIngresado.sueldo);
     document.querySelector(".sueldoTotal").innerHTML = `Sueldo total: $${sueldoTotal}`;
-    sueldoDisponible -= sueldo;
+    (operacion == "sumar")? sueldoDisponible -= parseInt(jugIngresado.sueldo) : sueldoDisponible += parseInt(jugIngresado.sueldo);
     document.querySelector(".sueldoDisponible").innerHTML = `Sueldo disponible: $${sueldoDisponible}`;
-    if(sueldoDisponible <= 10000){
-        document.querySelector(".sueldoDisponible").classList.add("sueldoBajo");
-        if(sueldoDisponible <= 5000){
-            document.querySelector(".sueldoDisponible").classList.add("sueldoMuyBajo");
-        }
-    }
+    (sueldoDisponible <= 10000) && document.querySelector(".sueldoDisponible").classList.add("sueldoBajo");
+    (sueldoDisponible <= 5000) && document.querySelector(".sueldoDisponible").classList.add("sueldoMuyBajo");
 }
 
 
 function actualizarListaJugadores(){
-    contador++;
-    innerListado += `<div class="jugador jug${contador}">
-                <h2>${nombre}</h2>
-                <p>${edad} años</p>
-                <p>${posicion}</p>
-                <p>Sueldo: $${sueldo}</p>
-                <button id="borrar${contador} type="button" class="btn btn-danger">Borrar jugador</button>
-                </div><br>`;
-    jdores.innerHTML = innerListado;
+    if(ingresantes.length == 0){
+        jdores.innerHTML = "";
+    }
+    else{
+        for (const j of ingresantes){
+            innerListado += `<div class="jugador jug${j.id}">
+                    <div class="jugadorId">
+                        <h2>${j.id}</h2>
+                    </div>
+                    <div class="jugadorDatos">
+                        <h2>${j.nombre}</h2>
+                        <p>${j.edad} años</p>
+                        <p>${j.jugadorPosicion(j.posicion)}</p>
+                        <p>Sueldo: $${j.sueldo}</p>
+                    </div>
+                </div>`;
+            jdores.innerHTML = innerListado;
+        }
+        innerListado="";
+    }
+    
 }
 
 
 function actualizarBotonConfirmar(){
-    if(arqueros>=1 && defensores>=4 && volantes>=3 && delanteros>=3){
-        document.querySelector("#botonConfirmarJugs").classList.remove("disabled");
-    }
+    cumpleCantJugadores = (arqueros>=1 && defensores>=4 && volantes>=3 && delanteros>=3)? true : false;
+
+    cumpleCantJugadores ? jugadoresSuficientes() : jugadoresInsuficientes();
 }
+
+
+function jugadoresSuficientes(){
+    document.querySelector("#mensajeFaltanJugs").innerHTML = "Jugadores suficientes para continuar";
+    document.querySelector("#mensajeFaltanJugs").style.color = "rgba(8, 243, 27, 0.966)";
+    document.querySelector("#botonConfirmarJugs").classList.remove("disabled");
+}
+
+function jugadoresInsuficientes(){
+    document.querySelector("#mensajeFaltanJugs").innerHTML = "¡Todavía faltan jugadores!";
+}
+
 
 
 //Funcion que recibe un array de objetos clase "Jugador" y devuelve sus respectivos nombres
@@ -220,13 +250,16 @@ function sueldos(arrayJugadores){
 }
 
 
+function edades(arrayJugadores){
+    return arrayJugadores.map((unJugador) => unJugador.edad);
+}
+
+
 //Funcion que recibe un array de sueldos y devuelve el de mayor valor
 function salarioMaximo(arraySueldos){
     let salMax = -999999999;
     arraySueldos.forEach((num) => {
-        if(num > salMax){
-            salMax = num;
-        }
+        num > salMax && (salMax = num);
     });
     return salMax;
 }
@@ -311,12 +344,14 @@ function estadisticaParticular(){
 let jdores = document.querySelector(".jugadores");
 
 formularioDelClub();
+const club = new Club(nombreClub, nombreDueño, plataDueño, []);
+
 
 
 formularioDeJugador();
 
 
-
+borrarJugador();
 
 const infractores = jugadores.filter((unJugador) => !unJugador.buenaConducta());
 const rendidores = jugadores.filter((unJugador) => unJugador.buenRendimiento());
@@ -331,6 +366,11 @@ let botonTerminarJugadores = document.querySelector("#botonConfirmarJugs");
 botonTerminarJugadores.addEventListener("click", guardarJugadores);
 
 
+//SPREAD DE OBJETO CLUB
+const clubTerminado = {
+    ...club,
+    equipo: jugadores 
+}
 
 
 

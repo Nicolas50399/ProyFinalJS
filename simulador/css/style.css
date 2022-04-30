@@ -91,7 +91,22 @@ footer{
 .jugador{
     border: 2px solid white;
     width: 60%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    margin-bottom: 15px;
 }
+
+.jugadorId{
+    width: 20%;
+}
+.jugadorDatos{
+    width: 80%;
+}
+
+
 
 .resultadosText{
     font-size: 200%;
@@ -105,6 +120,9 @@ footer{
 .inputForm{
     width: 20%;
     margin: 1rem 0;
+}
+.form-control{
+    display: inline;
 }
 
 #formularioClub{

@@ -80,6 +80,10 @@
               <h2 class="cantDelanteros">Delanteros: 0</h2>
               <h2 class="sueldoTotal">Sueldo total: $0</h2>
               <h2 class="sueldoDisponible">Sueldo disponible: $0</h2>
+              <form id="formularioBorrarJugador">
+                <input id="eliminarJug" class="form-control inputForm" type="number" placeholder="Id Jugador a borrar">
+                <button id="botonBorrarJugador" type="button submit" class="btn btn-danger">Borrar jugador</button>
+              </form>
             </div>
 
             <div id="formJugador">
@@ -102,6 +106,7 @@
           </div>
           <div id="confJugadores">
             <button id="botonConfirmarJugs" type="button" class="btn btn-success disabled">Confirmar jugadores</button>
+            <p id="mensajeFaltanJugs" class="sueldoBajo"></p>
           </div>
         </section>
     </main>

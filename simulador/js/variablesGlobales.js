@@ -15,9 +15,10 @@ let delanteros = 0;
 let sueldoTotal = parseInt(0);
 let sueldoDisponible = parseInt(0);
 let contador = 0;
-
-
-let listado = "NOMBRE       SALARIO\n";
+let cumpleCantJugadores;
+let elMasVeterano;
+let nombreClub;
+let id = 1;
 const jugadores = [];
 const ingresantes = [];
 let innerListado = "";
