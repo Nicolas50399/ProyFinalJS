@@ -1,22 +1,6 @@
 
 //--------------------------------------------------------------------FUNCIONES------------------------------------------------------------------------------------------------------
 
-const agregarBonoRendimiento = (salario) => salario + salario * 0.3;
-
-const agregarBonoJuventud = (salario) => salario + salario * 0.15;
-
-const restarPorInfracciones = (salario, faltas) => salario - 4000 * faltas;
-
-
-//Funcion que aumenta el salario si el jugador tuvo buen rendimiento
-function recompensarPorRendimiento(unJugador){
-    if(unJugador.buenRendimiento()){
-        sueldo = agregarBonoRendimiento(sueldo);
-        unJugador.esJoven() && (sueldo = agregarBonoJuventud(sueldo));
-    }
-}
-
-
 //Funcion que pide el nombre del club y modifica una etiqueta HTML
 function asignarNombreClub(nombre){
 
@@ -49,9 +33,12 @@ function validarFormularioClub(e){
     asignarDatosDueño(formulario.children[1].value, formulario.children[2].value);
 
     nombreClub = formulario.children[0].value;
-    nombreDueño = formulario.children[1].value;
-    plataDueño = formulario.children[2].value;
-    
+    nombreDuenio = formulario.children[1].value;
+    plataDuenio = formulario.children[2].value;
+
+    const club = new Club(nombreClub, nombreDuenio, plataDuenio);
+    localStorage.setItem("club", JSON.stringify(club));
+
     document.querySelector("#menuModificarClub").style.display = "none";
     document.querySelector(".sueldoDisponible").innerHTML = `Sueldo disponible: $${formulario.children[2].value}`;
     sueldoDisponible = formulario.children[2].value;
@@ -285,10 +272,9 @@ function buscarJugadorPorNombre(arrayJugadores, nomb){
 
 
 
-
-
-function guardarJugadores(){
+function guardarDatos(){
     localStorage.setItem("ingresantes", JSON.stringify(ingresantes));
+    alert("EQUIPO ARMADO CON EXITO");
 }
 
 
@@ -344,12 +330,8 @@ function estadisticaParticular(){
 let jdores = document.querySelector(".jugadores");
 
 formularioDelClub();
-const club = new Club(nombreClub, nombreDueño, plataDueño, []);
-
-
 
 formularioDeJugador();
-
 
 borrarJugador();
 
@@ -359,18 +341,5 @@ const estrellas = jugadores.filter((unJugador) => unJugador.buenRendimiento() &&
 
 //estadisticaParticular();
 
-
-
-
 let botonTerminarJugadores = document.querySelector("#botonConfirmarJugs");
-botonTerminarJugadores.addEventListener("click", guardarJugadores);
-
-
-//SPREAD DE OBJETO CLUB
-const clubTerminado = {
-    ...club,
-    equipo: jugadores 
-}
-
-
-
+botonTerminarJugadores.addEventListener("click", guardarDatos);

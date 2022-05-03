@@ -48,7 +48,40 @@
         Porro deserunt maxime cupiditate corrupti, fugit quia adipisci nostrum! Quo voluptatum qui eum, alias dolore hic sequi excepturi voluptatibus unde, cum non possimus dolores fuga impedit magni ducimus itaque minima.
         Voluptas velit at atque? Dicta, praesentium expedita eveniet, ex minima quisquam voluptatum accusantium dignissimos cum, asperiores saepe quaerat facere iusto. Porro iusto et tempore impedit laboriosam, nam cumque ab placeat?
         </p>
-        
+
+        <section id="menuElegirSuplentes">
+          <h1>SUPLENTES</h1>
+          <div id="menuArquerosSup" class="fondoGris"></div>
+          <div id="menuDefensoresSup" class="fondoGris"></div>
+          <div id="menuVolantesSup" class="fondoGris"></div>
+          <div id="menuDelanterosSup" class="fondoGris"></div>
+          <button id="botonConfirmarSuplentes" type="button" class="btn btn-success disabled">
+            IR A TU EQUIPO
+          </button>
+        </section>
+        <section id="menuMiEquipo">
+          <div id="datosClub">
+            <h1 id="nombreClub"></h1>
+            <h2 id="duenioClub"></h2>
+            <h2 id="fondosClub"></h2>
+          </div>
+          <div id="listTitulares" class="listaVertical">
+            <div class="bloqueArquero listaVertical w70"></div>
+            <div class="bloqueDefensores listaVertical w70"></div>
+            <div class="bloqueVolantes listaVertical w70"></div>
+            <div class="bloqueDelanteros listaVertical w70"></div>
+          </div>
+          <div id="cancha">
+            <img class="canchaImg" src="../assets/canchaVertical.jpg" alt="">
+          </div>
+          <div id="listSuplentes"></div>
+          <div id="menuSimularPartidos">
+            <form id="formSimularPartidos">
+              <input id="inputSimular" class="form-control" type="number" placeholder="Cantidad Partidos">
+              <button id="botonSimular" type="button submit" class="btn btn-primary">SIMULAR PARTIDOS</button>
+          </form>
+          </div>
+        </section>
     </main>
     <footer>
         <ul class="listadoFooter">
@@ -69,7 +102,8 @@
             </li>
         </ul>
     </footer>
-    <script src="../js/index.js"></script>
+    <script src="../js/jugadores.js"></script>
+    <script src="../js/tuEquipo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

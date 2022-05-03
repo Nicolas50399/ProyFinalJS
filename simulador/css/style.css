@@ -36,6 +36,7 @@ header{
 
 main{
     background-image: linear-gradient(to right, #1B0BBF, #420C8A);
+    padding-bottom: 2rem;
 }
 
 .tituloPrincipal{
@@ -174,4 +175,134 @@ footer{
 #confJugadores{
     grid-area: confirmarJ;
     /*background-color: yellow;*/
+}
+
+.menuHorizontal{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.nombreJugLista{
+    width: 40%;
+}
+.itemJugLista{
+    width: 30%;
+}
+#menuElegirSuplentes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.fondoGris{
+    background-color: black;
+    border: 2px solid white;
+    width: 70%;
+}
+.mensajeNoSuplentes{
+    margin: 0;
+}
+#botonConfirmarSuplentes{
+    margin-top: 3rem;
+    width: 60%;
+    height: 50px;
+}
+
+#menuMiEquipo{
+    display: none;
+    grid-template-areas: "datosClub datosClub"
+                        "listTitulares cancha"
+                        "listSuplentes menuSimular";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 4fr 2fr;
+}
+#datosClub{
+    grid-area: datosClub;
+    border: 1px solid black;
+}
+#listTitulares{
+    grid-area: listTitulares;
+    border: 1px solid black;
+}
+#cancha{
+    grid-area: cancha;
+    border: 1px solid black;
+}
+#listSuplentes{
+    grid-area: listSuplentes;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#menuSimularPartidos{
+    grid-area: menuSimular;
+    border: 1px solid black;
+}
+.canchaImg{
+    width: 80%;
+}
+.bloqueTitulares{
+    width: 75%;
+    height: 90%;
+    background-color: black;
+}
+.arqueroTitular{
+    color: gold;
+}
+.defensorTitular{
+    color: cyan;
+}
+.volanteTitular{
+    color:lime;
+}
+.delanteroTitular{
+    color: darkred;
+}
+
+.listaVertical{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.marginBottom{
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.w70{
+    background-color: rgb(0, 0, 0);
+}
+#menuSimularPartidos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#formSimularPartidos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#datosClub{
+    display: grid;
+    grid-template-areas: "nombreC nombreC"
+                        "duenioC fondosC";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr 1fr;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+#nombreClub{
+    grid-area: nombreC;
+}
+#duenioClub{
+    grid-area: duenioC;
+}
+#fondosClub{
+    grid-area: fondosC;
 }

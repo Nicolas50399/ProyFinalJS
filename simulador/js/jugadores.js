@@ -1,6 +1,7 @@
 class Jugador {
 
-    constructor(nombre, edad, posicion, partidos, promedio, sueldo, infracciones){
+    constructor(id, nombre, edad, posicion, partidos, promedio, sueldo, infracciones){
+        this.id = id;
         this.nombre = nombre;
         this.edad = edad;
         this.posicion = posicion;
@@ -20,13 +21,13 @@ class Jugador {
         if(this.infracciones <= 2){
             switch(this.posicion){
                 case "ARQUERO":
-                    return (this.partidos >= 30 && this.promedio >= 8.0);
+                    return (this.partidos >= 20 && this.promedio >= 8.0);
                 case "DEFENSOR":
-                    return (this.partidos >= 20 && this.promedio >= 9.0 && this.buenaConducta());
+                    return (this.partidos >= 10 && this.promedio >= 9.0 && this.buenaConducta());
                 case "VOLANTE":
-                    return (this.partidos >= 26 && this.promedio >= 7.5);
+                    return (this.partidos >= 15 && this.promedio >= 7.5);
                 case "DELANTERO":
-                    return (this.partidos >= 35 && this.promedio >= 8.5 && this.buenaConducta());
+                    return (this.partidos >= 25 && this.promedio >= 8.5 && this.buenaConducta());
                 default:
                     break;
             }
@@ -61,10 +62,9 @@ class JugadorIngresado{
 }
 
 class Club{
-    constructor(nombreClub, duenio, fondos, equipo){
+    constructor(nombreClub, duenio, fondos){
         this.nombreClub = nombreClub;
         this.duenio = duenio;
         this.fondos = fondos;
-        this.equipo = equipo;
     }
 }

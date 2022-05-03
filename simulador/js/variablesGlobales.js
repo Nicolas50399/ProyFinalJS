@@ -1,6 +1,6 @@
 let equipo;
-let nombreDueño;
-let plataDueño;
+let nombreDuenio;
+let plataDuenio;
 let nombre;
 let edad;
 let posicion;
