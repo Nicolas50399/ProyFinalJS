@@ -48,11 +48,17 @@ function seleccionarDelanteros(){
 function mostrarListaArqueros(){
     let menuArquerosSup = document.querySelector("#menuArquerosSup");
     let innerArqueros = `ARQUEROS: `;
+    innerArqueros += `<div class="menuHorizontal">
+                    <h3 class="nombreJugLista arqueroTitular">Nombre</h3>
+                    <h3 class="itemJugLista arqueroTitular">Edad</h3>
+                    <h3 class="itemJugLista arqueroTitular">Sueldo</h3>
+                    <h3 class="itemJugLista arqueroTitular">ID</h3>
+                    </div>`
     for(const a of arrayArqueros){
         innerArqueros += `<div class="menuHorizontal">
                         <h3 class="nombreJugLista">${a.nombre}</h3>
                         <h3 class="itemJugLista">${a.edad}</h3>
-                        <h3 class="itemJugLista">${a.sueldo}</h3>
+                        <h3 class="itemJugLista">$${a.sueldo}</h3>
                         <h3 class="itemJugLista">${a.id}</h3>
                         </div>`
     }
@@ -68,6 +74,12 @@ function mostrarListaArqueros(){
 function mostrarListaDefensores(){
     let menuDefensoresSup = document.querySelector("#menuDefensoresSup");
     let innerDefensores = `DEFENSORES: `;
+    innerDefensores += `<div class="menuHorizontal">
+                    <h3 class="nombreJugLista arqueroTitular">Nombre</h3>
+                    <h3 class="itemJugLista arqueroTitular">Edad</h3>
+                    <h3 class="itemJugLista arqueroTitular">Sueldo</h3>
+                    <h3 class="itemJugLista arqueroTitular">ID</h3>
+                    </div>`
     for(const a of arrayDefensores){
         innerDefensores += `<div class="menuHorizontal">
                         <h3 class="nombreJugLista">${a.nombre}</h3>
@@ -88,6 +100,12 @@ function mostrarListaDefensores(){
 function mostrarListaVolantes(){
     let menuVolantesSup = document.querySelector("#menuVolantesSup");
     let innerVolantes = `VOLANTES: `;
+    innerVolantes += `<div class="menuHorizontal">
+                    <h3 class="nombreJugLista arqueroTitular">Nombre</h3>
+                    <h3 class="itemJugLista arqueroTitular">Edad</h3>
+                    <h3 class="itemJugLista arqueroTitular">Sueldo</h3>
+                    <h3 class="itemJugLista arqueroTitular">ID</h3>
+                    </div>`
     for(const a of arrayVolantes){
         innerVolantes += `<div class="menuHorizontal">
                         <h3 class="nombreJugLista">${a.nombre}</h3>
@@ -109,6 +127,12 @@ function mostrarListaVolantes(){
 function mostrarListaDelanteros(){
     let menuDelanterosSup = document.querySelector("#menuDelanterosSup");
     let innerDelanteros = `DELANTEROS: `;
+    innerDelanteros += `<div class="menuHorizontal">
+                    <h3 class="nombreJugLista arqueroTitular">Nombre</h3>
+                    <h3 class="itemJugLista arqueroTitular">Edad</h3>
+                    <h3 class="itemJugLista arqueroTitular">Sueldo</h3>
+                    <h3 class="itemJugLista arqueroTitular">ID</h3>
+                    </div>`
     for(const a of arrayDelanteros){
         innerDelanteros += `<div class="menuHorizontal">
                         <h3 class="nombreJugLista">${a.nombre}</h3>
@@ -139,6 +163,7 @@ function mandarArqueroAlBanco(e){
     let idArqueroElegido = document.querySelector("#inputArquerosSup").value;
     quitarArquero(idArqueroElegido);
     idArqueroElegido = "";
+    
     if(arrayArqueros.length == 1){
         document.querySelector("#botonDefensoresSup").classList.remove("disabled");
     }
@@ -152,6 +177,15 @@ function quitarArquero(id){
 function posicionArqueroABorrar(id){
     const arquero = arrayArqueros.find((x) => x.id == id);
     suplentes.push(arquero);
+    Toastify({
+        text: `${arquero.nombre} ahora está en el banco`,
+        duration: 3000,
+        gravity: 'bottom',
+        position: 'left',
+        style: {
+            background: 'linear-gradient(to right, #00b09b, #96c92d)'
+        }
+    }).showToast();
     return arrayArqueros.indexOf(arquero);
 }
 
@@ -176,6 +210,15 @@ function quitarDefensor(id){
 function posicionDefensorABorrar(id){
     const defensor = arrayDefensores.find((x) => x.id == id);
     suplentes.push(defensor);
+    Toastify({
+        text: `${defensor.nombre} ahora está en el banco`,
+        duration: 3000,
+        gravity: 'bottom',
+        position: 'left',
+        style: {
+            background: 'linear-gradient(to right, #00b09b, #96c92d)'
+        }
+    }).showToast();
     return arrayDefensores.indexOf(defensor);
 }
 
@@ -200,6 +243,15 @@ function quitarVolante(id){
 function posicionVolanteABorrar(id){
     const volante = arrayVolantes.find((x) => x.id == id);
     suplentes.push(volante);
+    Toastify({
+        text: `${volante.nombre} ahora está en el banco`,
+        duration: 3000,
+        gravity: 'bottom',
+        position: 'left',
+        style: {
+            background: 'linear-gradient(to right, #00b09b, #96c92d)'
+        }
+    }).showToast();
     return arrayVolantes.indexOf(volante);
 }
 
@@ -224,6 +276,15 @@ function quitarDelantero(id){
 function posicionDelanteroABorrar(id){
     const delantero = arrayDelanteros.find((x) => x.id == id);
     suplentes.push(delantero);
+    Toastify({
+        text: `${delantero.nombre} ahora está en el banco`,
+        duration: 3000,
+        gravity: 'bottom',
+        position: 'left',
+        style: {
+            background: 'linear-gradient(to right, #00b09b, #96c92d)'
+        }
+    }).showToast();
     return arrayDelanteros.indexOf(delantero);
 }
 
@@ -310,7 +371,25 @@ function mostrarSuplentes(){
 
 document.querySelector("#formSimularPartidos").addEventListener("submit", simularPartidos);
 
-function simularPartidos(){
+function simularPartidos(e){
+    e.preventDefault();
+    Swal.fire({
+        title: '¿Está seguro que desea simular los partidos?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, seguro',
+        cancelButtonText: 'No'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Simulación en proceso!',
+                icon: 'success',
+                text: 'El equipo está jugando los partidos'
+            })
+        }
+    })
+
     let cantPartidosTitulares = document.querySelector("#inputSimular").value;
     //let cantPartidosSuplentes = Math.floor(cantPartidosTitulares / 3);
     actualizarTitulares(cantPartidosTitulares);

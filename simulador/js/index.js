@@ -64,6 +64,15 @@ function jugadorNoEncontrado(){
 function quitarJugador(){
 
     ingresantes.splice(posicionIngresanteABorrar(document.querySelector("#eliminarJug").value), 1);
+    Toastify({
+        text: `El jugador fue quitado de la lista`,
+        duration: 3000,
+        gravity: 'bottom',
+        position: 'left',
+        style: {
+            background: 'linear-gradient(to right, #DC0707, #EE5959)'
+        }
+    }).showToast();
     actualizarListaJugadores();
 }
 
@@ -118,7 +127,15 @@ function listarIngresante(){
 
 
     ingresantes.push(ingresante);
-
+    Toastify({
+        text: `${ingresante.nombre} incluido en la lista`,
+        duration: 3000,
+        gravity: 'bottom',
+        position: 'left',
+        style: {
+            background: 'linear-gradient(to right, #00b09b, #96c92d)'
+        }
+    }).showToast();
     //DESESTRUCTURACION DEL ARRAY DE INGRESANTES
     loguearIngresanteDeLaSuerte(ingresantes);
 
@@ -126,8 +143,6 @@ function listarIngresante(){
     actualizarListaJugadores();
     actualizarMejorPago();
 
-    //SPREAD DE ARRAY DE EDADES DE INGRESANTES
-    //actualizarIngresanteMasVeterano(ingresantes);
 
 
 
@@ -274,7 +289,22 @@ function buscarJugadorPorNombre(arrayJugadores, nomb){
 
 function guardarDatos(){
     localStorage.setItem("ingresantes", JSON.stringify(ingresantes));
-    alert("EQUIPO ARMADO CON EXITO");
+    Swal.fire({
+        title: '¿Está seguro que desea confirmar el equipo?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, seguro',
+        cancelButtonText: 'No'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: '¡Confirmado!',
+                icon: 'success',
+                text: 'El equipo ha sido confirmado'
+            })
+        }
+    })
 }
 
 
