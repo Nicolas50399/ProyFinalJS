@@ -306,3 +306,20 @@ footer{
 #fondosClub{
     grid-area: fondosC;
 }
+
+.width10{
+    width: 10%;
+}
+
+.width30{
+    width: 30%;
+}
+
+#tablaEstadisticas{
+    display: flex;
+    flex-direction: column;
+}
+.menuVertical{
+    display: flex;
+    flex-direction: column;
+}

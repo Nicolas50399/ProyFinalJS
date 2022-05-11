@@ -36,13 +36,32 @@ function validarFormularioClub(e){
     nombreDuenio = formulario.children[1].value;
     plataDuenio = formulario.children[2].value;
 
+    peticionPOSTClub();
+
     const club = new Club(nombreClub, nombreDuenio, plataDuenio);
     localStorage.setItem("club", JSON.stringify(club));
 
     document.querySelector("#menuModificarClub").style.display = "none";
     document.querySelector(".sueldoDisponible").innerHTML = `Sueldo disponible: $${formulario.children[2].value}`;
-    sueldoDisponible = formulario.children[2].value;
+    sueldoDisponible = document.querySelector("#plataDue").value;
     document.querySelector("#menuModificarJugadores").style.display = "block";
+}
+//alert
+function peticionPOSTClub(){
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            body: JSON.stringify({
+                title: `${nombreClub}`,
+                body: `DUEÑO: ${nombreDuenio}\n
+                FONDOS: $${plataDuenio}`,
+                userId: 0,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
 }
 
 
@@ -98,15 +117,18 @@ function formularioDeJugador(){
 
 function validarFormularioJugador(e){
     e.preventDefault();
+    if(nombre!=null && edad!=null && posicion!=null && sueldo!=null){
+        nombre = document.querySelector("#nombreJug").value;
+        edad = document.querySelector("#edadJug").value;
+        posicion = document.querySelector("#posicionJug").value;
+        sueldo = document.querySelector("#sueldoJug").value;
+        borrarContenidoFormJugador();
 
-    nombre = document.querySelector("#nombreJug").value;
-    edad = document.querySelector("#edadJug").value;
-    posicion = document.querySelector("#posicionJug").value;
-    sueldo = document.querySelector("#sueldoJug").value;
-
-    borrarContenidoFormJugador();
-
-    (sueldoDisponible >= sueldo) ? listarIngresante() : saldoInsuficiente();
+    (parseInt(sueldoDisponible) >= parseInt(sueldo)) ? listarIngresante() : saldoInsuficiente();
+    }
+    else{
+        alert("Error, faltan datos del jugador")
+    }
 }
 
 
@@ -288,7 +310,7 @@ function buscarJugadorPorNombre(arrayJugadores, nomb){
 
 
 function guardarDatos(){
-    localStorage.setItem("ingresantes", JSON.stringify(ingresantes));
+    
     Swal.fire({
         title: '¿Está seguro que desea confirmar el equipo?',
         icon: 'warning',
@@ -305,6 +327,7 @@ function guardarDatos(){
             })
         }
     })
+    localStorage.setItem("ingresantes", JSON.stringify(ingresantes));
 }
 
 

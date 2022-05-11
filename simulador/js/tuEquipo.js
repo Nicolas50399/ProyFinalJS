@@ -1,5 +1,11 @@
 const suplentes = [];
 const titulares = [];
+const jugadores = [];
+let promedioTitular;
+let infraccionesTitular;
+let promedioSuplente;
+let infraccionesSuplente;
+let sueldoResultante;
 let clubConfirmado = JSON.parse(localStorage.getItem("club"));
 
 
@@ -23,10 +29,15 @@ const arrayDelanteros = ingresados.filter(unIngresado => unIngresado.posicion ==
 seleccionarSuplentes();
 
 function seleccionarSuplentes(){
-    seleccionarArqueros();
-    seleccionarDefensores();
-    seleccionarVolantes();
-    seleccionarDelanteros();
+    if(arrayArqueros.length==1 && arrayDefensores.length==4 && arrayVolantes.length==3 && arrayDelanteros.length==3){
+        document.querySelector("#botonConfirmarSuplentes").classList.remove("disabled");
+    }
+    else{
+        seleccionarArqueros();
+        seleccionarDefensores();
+        seleccionarVolantes();
+        seleccionarDelanteros();
+    }
 }
 
 function seleccionarArqueros(){
@@ -153,9 +164,9 @@ function mostrarListaDelanteros(){
 function cantidadSuficiente(pos, menu){
     menu.innerHTML = `<div class="menuHorizontal"><h2>${pos}</h2>
                     <p class="mensajeNoSuplentes">No hay suplentes disponibles</p></div>`;
-    if(pos=="ARQUEROS: ")document.querySelector("#botonDefensoresSup").classList.remove("disabled");
-    else if(pos=="DEFENSORES: " && arrayArqueros.length==1)document.querySelector("#botonVolantesSup").classList.remove("disabled");
-    else if(pos=="VOLANTES: " && arrayArqueros.length==1 && arrayDefensores.length==4)document.querySelector("#botonDelanterosSup").classList.remove("disabled");
+    if(arrayArqueros.length==1)document.querySelector("#botonDefensoresSup").classList.remove("disabled");
+    else if(arrayDefensores,length==4 && arrayArqueros.length==1)document.querySelector("#botonVolantesSup").classList.remove("disabled");
+    else if(arrayVolantes.length==3 && arrayArqueros.length==1 && arrayDefensores.length==4)document.querySelector("#botonDelanterosSup").classList.remove("disabled");
 }
 
 function mandarArqueroAlBanco(e){
@@ -291,7 +302,7 @@ function posicionDelanteroABorrar(id){
 document.querySelector("#botonConfirmarSuplentes").addEventListener("click", irAlEquipo);
 
 function irAlEquipo(e){
-    e.preventDefault
+    e.preventDefault();
     document.querySelector("#menuElegirSuplentes").style.display="none";
     document.querySelector("#menuMiEquipo").style.display="grid";
     mostrarTitulares();
@@ -390,30 +401,75 @@ function simularPartidos(e){
         }
     })
 
-    let cantPartidosTitulares = document.querySelector("#inputSimular").value;
-    //let cantPartidosSuplentes = Math.floor(cantPartidosTitulares / 3);
+    let cantPartidosTitulares = parseInt(document.querySelector("#inputSimular").value);
+    let cantPartidosSuplentes = parseInt(Math.floor(cantPartidosTitulares / 3));
     actualizarTitulares(cantPartidosTitulares);
+    actualizarSuplentes(cantPartidosSuplentes);
+    localStorage.setItem("jugadores", JSON.stringify(jugadores));
+
+    peticionPOSTJugadores();
+    
+}
+
+function peticionPOSTJugadores(){
+    jugadores.forEach(jug => {
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            body: JSON.stringify({
+                title: `${jug.nombre}`,
+                body: `EDAD: ${jug.edad} años\n
+                POSICION: ${jug.cualPosicion(jug.posicion)}\n
+                PROMEDIO: ${jug.promedio}`,
+                userId: `${jug.id}`,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+    })
 }
 
 function actualizarTitulares(cantPartidos){
-    titulares.forEach(unTitular => actualizarDatosTitular(unTitular, cantPartidos));
+    titulares.forEach(unTitular => {
+        actualizarDatosTitular(unTitular, cantPartidos);
+    });
 }
 
 function actualizarDatosTitular(titular, cantPartidos){
-    let promedioTitular = ((Math.random * 30 + 70) / 10);
-    let infraccionesTitular = Math.random * (Math.floor(cantPartidos / 7));
+    promedioTitular = (Math.floor(Math.random() * (100-70+1)) + 70) / 10;
+    infraccionesTitular = Math.floor(Math.random() * (Math.floor(cantPartidos / 7)));
 
-    const jugTitular = new Jugador(titular.id, titular.nombre, titular.edad, titular.jugadorPosicion(titular.posicion), cantPartidos, promedioTitular, titular.sueldo, infraccionesTitular);
-    let sueldoResultante = 0;
+    const jugTitular = new Jugador(titular.id, titular.nombre, parseInt(titular.edad), titular.posicion, parseInt(cantPartidos), promedioTitular, titular.sueldo, infraccionesTitular);
+    sueldoResultante = parseInt(titular.sueldo);
     recompensarPorRendimiento(jugTitular, sueldoResultante);
-    sueldoResultante -= restarPorInfracciones(sueldoResultante, infraccionesTitular);
+    sueldoResultante = restarPorInfracciones(sueldoResultante, infraccionesTitular);
+    const jugTitularActualizado = new Jugador(titular.id, titular.nombre, parseInt(titular.edad), titular.cualPosicion(titular.posicion), parseInt(cantPartidos), promedioTitular, sueldoResultante, infraccionesTitular);
+    jugadores.push(jugTitularActualizado);
+}
+
+function actualizarSuplentes(cantPartidos){
+    suplentes.forEach(unSuplente => actualizarDatosSuplentes(unSuplente, cantPartidos));
+}
+
+function actualizarDatosSuplentes(suplente, cantPartidos){
+    promedioSuplente = (Math.floor(Math.random() * (100-50+1)) + 50) / 10;
+    infraccionesSuplente = Math.floor(Math.random() * (Math.floor(cantPartidos / 5)));
+
+    const jugSuplente = new Jugador(suplente.id, suplente.nombre, parseInt(suplente.edad), suplente.posicion, parseInt(cantPartidos), promedioSuplente, suplente.sueldo, infraccionesSuplente);
+    sueldoResultante = suplente.sueldo;
+    recompensarPorRendimiento(jugSuplente, sueldoResultante);
+    sueldoResultante = restarPorInfracciones(sueldoResultante, infraccionesSuplente);
+    const jugSuplenteActualizado = new Jugador(suplente.id, suplente.nombre, parseInt(suplente.edad), suplente.cualPosicion(suplente.posicion), parseInt(cantPartidos), promedioSuplente, sueldoResultante, infraccionesSuplente);
+    jugadores.push(jugSuplenteActualizado);
 }
 
 //Funcion que aumenta el salario si el jugador tuvo buen rendimiento
 function recompensarPorRendimiento(unJugador, sueldoResultante){
     if(unJugador.buenRendimiento()){
-        sueldoResultante += agregarBonoRendimiento(unJugador.sueldo);
-        unJugador.esJoven() && (sueldoResultante += agregarBonoJuventud(unJugador.sueldo));
+        sueldoResultante = agregarBonoRendimiento(sueldoResultante);
+        unJugador.esJoven() && (sueldoResultante = agregarBonoJuventud(sueldoResultante));
     }
 }
 

@@ -20,5 +20,6 @@ let elMasVeterano;
 let nombreClub;
 let id = 1;
 const jugadores = [];
+const jugadoresSuplentes = [];
 const ingresantes = [];
 let innerListado = "";

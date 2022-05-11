@@ -40,6 +40,13 @@ class Jugador {
         return (this.edad <= 25);
     }
 
+    cualPosicion(pos){
+        if(pos==1)return "ARQ";
+        else if(pos==2)return "DEF";
+        else if(pos==3)return "VOL";
+        else return "DEL";
+    }
+
 }
 
 class JugadorIngresado{
