@@ -116,18 +116,20 @@ function formularioDeJugador(){
 }
 
 function validarFormularioJugador(e){
+    
     e.preventDefault();
-    if(nombre!=null && edad!=null && posicion!=null && sueldo!=null){
-        nombre = document.querySelector("#nombreJug").value;
-        edad = document.querySelector("#edadJug").value;
-        posicion = document.querySelector("#posicionJug").value;
-        sueldo = document.querySelector("#sueldoJug").value;
+    nombre = document.querySelector("#nombreJug").value;
+    edad = document.querySelector("#edadJug").value;
+    posicion = document.querySelector("#posicionJug").value;
+    sueldo = document.querySelector("#sueldoJug").value;
+    if(nombre!="" && edad!="" && posicion!="" && sueldo!=""){
+        
         borrarContenidoFormJugador();
 
     (parseInt(sueldoDisponible) >= parseInt(sueldo)) ? listarIngresante() : saldoInsuficiente();
     }
     else{
-        alert("Error, faltan datos del jugador")
+        alert("Error, faltan datos del jugador");
     }
 }
 
@@ -388,9 +390,7 @@ formularioDeJugador();
 
 borrarJugador();
 
-const infractores = jugadores.filter((unJugador) => !unJugador.buenaConducta());
-const rendidores = jugadores.filter((unJugador) => unJugador.buenRendimiento());
-const estrellas = jugadores.filter((unJugador) => unJugador.buenRendimiento() && unJugador.buenaConducta() && unJugador.esJoven());
+
 
 //estadisticaParticular();
 

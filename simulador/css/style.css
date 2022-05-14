@@ -25,6 +25,7 @@ header{
 
 .navegador{
     width: 90%;
+    display: ;
 }
 
 .color1{
@@ -55,6 +56,10 @@ main{
 
 .listado{
     list-style: none;
+}
+
+.bordadoBlanco{
+    border: 2px solid white;
 }
 
 
@@ -322,4 +327,43 @@ footer{
 .menuVertical{
     display: flex;
     flex-direction: column;
+}
+
+#ordenarPor {
+    list-style: none inside;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#ordenarPor li {
+    display: inline;
+    background: #24af15;
+}
+
+#ordenarPor li a {
+    display: inline;
+    text-decoration: none;
+    line-height: 35px;
+    color: #ffffff;
+}
+
+#ordenarPor li li a {
+    font-size: 80%;
+}
+#ordenarPor li:hover {
+    background: #003f20;
+}
+
+#ordenarPor ul {
+    padding: 0;
+    display: none;
+}
+
+#ordenarPor li:hover ul ul {
+    display: none;
+}
+
+#ordenarPor li:hover ul {
+    display: inline;
 }

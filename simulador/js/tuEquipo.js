@@ -418,7 +418,7 @@ function peticionPOSTJugadores(){
             body: JSON.stringify({
                 title: `${jug.nombre}`,
                 body: `EDAD: ${jug.edad} años\n
-                POSICION: ${jug.cualPosicion(jug.posicion)}\n
+                POSICION: ${cualPosicion(jug.posicion)}\n
                 PROMEDIO: ${jug.promedio}`,
                 userId: `${jug.id}`,
             }),
@@ -429,6 +429,13 @@ function peticionPOSTJugadores(){
         .then((response) => response.json())
         .then((data) => console.log(data))
     })
+}
+
+function cualPosicion(jug){
+    if(jug.posicion==1)return "ARQ";
+    else if(jug.posicion==2)return "DEF";
+    else if(jug.posicion==3)return "VOL";
+    else return "DEL";
 }
 
 function actualizarTitulares(cantPartidos){
@@ -445,7 +452,7 @@ function actualizarDatosTitular(titular, cantPartidos){
     sueldoResultante = parseInt(titular.sueldo);
     recompensarPorRendimiento(jugTitular, sueldoResultante);
     sueldoResultante = restarPorInfracciones(sueldoResultante, infraccionesTitular);
-    const jugTitularActualizado = new Jugador(titular.id, titular.nombre, parseInt(titular.edad), titular.cualPosicion(titular.posicion), parseInt(cantPartidos), promedioTitular, sueldoResultante, infraccionesTitular);
+    const jugTitularActualizado = new Jugador(titular.id, titular.nombre, parseInt(titular.edad), titular.posicion, parseInt(cantPartidos), promedioTitular, sueldoResultante, infraccionesTitular);
     jugadores.push(jugTitularActualizado);
 }
 
@@ -461,16 +468,33 @@ function actualizarDatosSuplentes(suplente, cantPartidos){
     sueldoResultante = suplente.sueldo;
     recompensarPorRendimiento(jugSuplente, sueldoResultante);
     sueldoResultante = restarPorInfracciones(sueldoResultante, infraccionesSuplente);
-    const jugSuplenteActualizado = new Jugador(suplente.id, suplente.nombre, parseInt(suplente.edad), suplente.cualPosicion(suplente.posicion), parseInt(cantPartidos), promedioSuplente, sueldoResultante, infraccionesSuplente);
+    const jugSuplenteActualizado = new Jugador(suplente.id, suplente.nombre, parseInt(suplente.edad), suplente.posicion, parseInt(cantPartidos), promedioSuplente, sueldoResultante, infraccionesSuplente);
     jugadores.push(jugSuplenteActualizado);
 }
 
+
 //Funcion que aumenta el salario si el jugador tuvo buen rendimiento
-function recompensarPorRendimiento(unJugador, sueldoResultante){
-    if(unJugador.buenRendimiento()){
-        sueldoResultante = agregarBonoRendimiento(sueldoResultante);
-        unJugador.esJoven() && (sueldoResultante = agregarBonoJuventud(sueldoResultante));
+function recompensarPorRendimiento(unJugador, sueldoRes){
+    if(buenRendimiento(unJugador)){
+        console.log("FUNCIONA");
+        sueldoRes += agregarBonoRendimiento(sueldoRes);
+        esJoven(unJugador) && (sueldoRes = agregarBonoJuventud(sueldoRes));
     }
+}
+
+function buenRendimiento(jug){
+    if(jug.posicion == 1) return (jug.partidos >= 20 && jug.promedio >= 8.0);
+    else if(jug.posicion == 2)return (jug.partidos >= 10 && jug.promedio >= 9.0);
+    else if(jug.posicion == 3)return (jug.partidos >= 15 && jug.promedio >= 7.5);
+    else return (jug.partidos >= 25 && jug.promedio >= 8.5);
+}
+
+function esJoven(jug){
+    return (jug.edad <= 25);
+}
+
+function buenaConducta(jug){
+    return (jug.infracciones == 0);
 }
 
 const agregarBonoRendimiento = (salario) => salario + salario * 0.3;
