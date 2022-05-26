@@ -23,9 +23,6 @@
                     <a class="nav-link" aria-current="page" href="../index.html">Inicio</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="nosotros.html">Nosotros</a>
-                  </li>
-                  <li class="nav-item">
                     <a class="nav-link disabled" href="crearEquipo.html">Crear Equipo</a>
                   </li>
                   <li class="nav-item">
@@ -35,27 +32,21 @@
                     <a class="nav-link" href="estadisticas.html">Estadísticas</a>
                   </li>
                 </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
               </div>
             </div>
           </nav>
     </header>
     <main>
         <h1 class="tituloPrincipal">TU EQUIPO</h1>
-        <p class="parrafo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos suscipit harum molestiae beatae officia aliquam non inventore saepe, quaerat vero ex quisquam nobis iusto. Maiores labore vel expedita non dolores.
-        Porro deserunt maxime cupiditate corrupti, fugit quia adipisci nostrum! Quo voluptatum qui eum, alias dolore hic sequi excepturi voluptatibus unde, cum non possimus dolores fuga impedit magni ducimus itaque minima.
-        Voluptas velit at atque? Dicta, praesentium expedita eveniet, ex minima quisquam voluptatum accusantium dignissimos cum, asperiores saepe quaerat facere iusto. Porro iusto et tempore impedit laboriosam, nam cumque ab placeat?
+        <p class="parrafo">Bien, ya tenemos creado el equipo y todos sus jugadores. Ahora se van a mostrar varias listas de jugadores separadas por su posicion. Para cada una, se deben elegir los jugadores que van de suplentes, ya que solo puede haber 1 arquero, 4 defensores, 3 volantes y 3 delanteros en el once titular. Una vez que definamos los titulares, se prosigue mostrando la plantilla final y una opcion para elegir una cantidad de partidos a simular, al confirmar esta cantidad, se sigue con el ultimo paso, donde se muestran los resultados finales.
         </p>
 
         <section id="menuElegirSuplentes">
           <h1>SUPLENTES</h1>
-          <div id="menuArquerosSup" class="fondoGris"></div>
-          <div id="menuDefensoresSup" class="fondoGris"></div>
-          <div id="menuVolantesSup" class="fondoGris"></div>
-          <div id="menuDelanterosSup" class="fondoGris"></div>
+          <div id="menuArquerosSup" class="fondoJugadores">ARQUEROS: Jugadores suficientes</div>
+          <div id="menuDefensoresSup" class="fondoJugadores">DEFENSORES: Jugadores suficientes</div>
+          <div id="menuVolantesSup" class="fondoJugadores">VOLANTES: Jugadores suficientes</div>
+          <div id="menuDelanterosSup" class="fondoJugadores">DELANTEROS: Jugadores suficientes</div>
           <button id="botonConfirmarSuplentes" type="button" class="btn btn-success disabled">
             IR A TU EQUIPO
           </button>
@@ -87,23 +78,7 @@
         </section>
     </main>
     <footer>
-        <ul class="listadoFooter">
-            <li>
-                <a href="#">Inicio</a>
-            </li>
-            <li>
-                <a href="#">Nosotros</a>
-            </li>
-            <li>
-                <a href="#">Crear Equipo</a>
-            </li>
-            <li>
-                <a href="#">Tu Equipo</a>
-            </li>
-            <li>
-                <a href="#">Estadísticas</a>
-            </li>
-        </ul>
+      @2022 Todos los derechos reservados
     </footer>
     <script src="../js/jugadores.js"></script>
     <script src="../js/tuEquipo.js"></script>

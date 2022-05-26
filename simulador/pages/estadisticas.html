@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador - Sueldos</title>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body>
     <header>
@@ -22,9 +23,6 @@
                     <a class="nav-link" aria-current="page" href="../index.html">Inicio</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="nosotros.html">Nosotros</a>
-                  </li>
-                  <li class="nav-item">
                     <a class="nav-link disabled" href="crearEquipo.html">Crear Equipo</a>
                   </li>
                   <li class="nav-item">
@@ -34,58 +32,115 @@
                     <a class="nav-link active" href="#">Estadísticas</a>
                   </li>
                 </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
               </div>
             </div>
           </nav>
     </header>
     <main>
         <h1 class="tituloPrincipal">ESTADÍSTICAS</h1>
-        <p class="parrafo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos suscipit harum molestiae beatae officia aliquam non inventore saepe, quaerat vero ex quisquam nobis iusto. Maiores labore vel expedita non dolores.
-        Porro deserunt maxime cupiditate corrupti, fugit quia adipisci nostrum! Quo voluptatum qui eum, alias dolore hic sequi excepturi voluptatibus unde, cum non possimus dolores fuga impedit magni ducimus itaque minima.
-        Voluptas velit at atque? Dicta, praesentium expedita eveniet, ex minima quisquam voluptatum accusantium dignissimos cum, asperiores saepe quaerat facere iusto. Porro iusto et tempore impedit laboriosam, nam cumque ab placeat?
+        <p class="parrafo">Por ultimo, tenemos los resultados. Podes mirar tanto las estadisticas de un jugador especifico como las de todo el equipo junto. En ambas se muestra el sueldo final que cada jugador va a recibir, teniendo en cuenta sus actuaciones en los partidos simulados. Por ultimo, se muestra el sueldo final del club luego de haberle pagado a sus jugadores.
+
         </p>
-        <section id="ordenarLista">
-          <ul id="ordenarPor">
-            <li><a href="#">Ordenar por</a>
-                <ul>
-                    <li><a id="ordenarPorID" href="#">ID</a></li>
-                    <li><a id="ordenarPorEdad" href="#">Edad</a></li>
-                    <li><a id="ordenarPorSueldo" href="#">Sueldo</a></li>
-                    <li><a id="ordenarPorPromedio" href="#">Promedio</a></li>
-                    <li><a id="ordenarPorInfracciones" href="#">Infracciones</a></li>
-                </ul>
-           </li>
-        </ul>
+        <section class="menuEstadisticas">
+          <div class="card" style="width: 18rem;">
+            <img src="/assets/grupales.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title negro">Grupales</h5>
+              <p class="card-text negro">Estadísticas de todo el equipo entero. Se muestra una lista ordenable con todos los jugadores y sus resultados finales, junto con algunas distinciones de los jugadores por su rendimiento.</p>
+              <a href="#" class="btn btn-primary botonEstGrupales">Mirar Estadísticas</a>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem;">
+            <img src="/assets/individuales.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title negro">Individuales</h5>
+              <p class="card-text negro">Estadísticas de un jugador en particular. Se muestra un buscador al que se puede acceder al jugador que quieras ingresando su ID, para luego mostrar su carta particular con todos sus resultados.</p>
+              <a href="#" class="btn btn-primary botonEstIndividuales">Mirar Estadísticas</a>
+            </div>
+          </div>
         </section>
-        <section id="tablaEstadisticas"></section>
-        <section id="jugadoresDestacados"></section>
-        <section id="volverASimular"></section>
+        <section id="mostrarEstadisticasGrupo">
+          <section id="ordenarLista">
+            <ul id="ordenarPor" class="">
+              <li><a href="#">Ordenar por</a>
+                  <ul>
+                      <li><a id="ordenarPorID" href="#">ID</a></li>
+                      <li><a id="ordenarPorEdad" href="#">Edad</a></li>
+                      <li><a id="ordenarPorSueldo" href="#">Sueldo</a></li>
+                      <li><a id="ordenarPorPromedio" href="#">Promedio</a></li>
+                      <li><a id="ordenarPorInfracciones" href="#">Infracciones</a></li>
+                  </ul>
+             </li>
+          </ul>
+          </section>
+          <section id="tablaEstadisticas""></section>
+          <section id="jugadoresDestacados">
+            <div class="card" style="width: 18rem;">
+              <img src="/assets/infractores.jpeg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title negro">Infractores</h5>
+                <p class="card-text negro">Jugadores que cometieron por lo menos una infracción.</p>
+                <p id="jugsInfractores" class="card-text negro"></p>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+              <img src="/assets/rendidores.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title negro">Rendidores</h5>
+                <p class="card-text negro">Jugadores que tuvieron un buen promedio en sus partidos. Las condiciones de rendimiento varían dependiendo de su posición.</p>
+                <p id="jugsRendidores" class="card-text negro"></p>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+              <img src="/assets/estrellas.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title negro">Estrellas</h5>
+                <p class="card-text negro">Jugadores que, ademas de tener un buen rendimiento, son menores de 25 años y no tienen infracciones.</p>
+                <p id="jugsEstrellas" class="card-text negro"></p>
+              </div>
+            </div>
+          </section>
+          <button id="botonAtrasGrupal" type="button" class="btn btn-info">Volver atrás</button>
+        </section>
+        
+        <section id="buscarEstadisticaJugador">
+          <form id="formularioBuscarJugador">
+            <input id="buscarJug" class="form-control inputForm" type="number" placeholder="ID del jugador">
+            <button id="botonBuscarJugador" type="button submit" class="btn btn-warning">Buscar jugador</button>
+          </form>
+          <div class="jugadorEncontrado">
+            <div id="cartaJugadorBuscado" class="card" style="width: 18rem;">
+              <img src="/assets/jugadorBuscado.png"" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title negro">Nombre del jugador</h5>
+                <p class="card-text negro"></p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Edad: </li>
+                <li class="list-group-item">Posicion: </li>
+                <li class="list-group-item">Partidos: </li>
+                <li class="list-group-item">Promedio: </li>
+                <li class="list-group-item">Infracciones: </li>
+                <li class="list-group-item">SUELDO TOTAL: </li>
+                <li class="list-group-item">ID: </li>
+                <li class="list-group-item">--------</li>
+                <li class="list-group-item">INFRACTOR: </li>
+                <li class="list-group-item">RENDIDOR: </li>
+                <li class="list-group-item">ESTRELLA: </li>
+              </ul>
+            </div>
+          </div>
+          <button id="botonAtrasIndividual" type="button" class="btn btn-info">Volver atrás</button>
+        </section>
+        <section id="sueldoClubResultante"></section>
     </main>
     <footer>
-        <ul class="listadoFooter">
-            <li>
-                <a href="#">Inicio</a>
-            </li>
-            <li>
-                <a href="#">Nosotros</a>
-            </li>
-            <li>
-                <a href="#">Crear Equipo</a>
-            </li>
-            <li>
-                <a href="#">Tu Equipo</a>
-            </li>
-            <li>
-                <a href="#">Estadísticas</a>
-            </li>
-        </ul>
+        @2022 Todos los derechos reservados
     </footer>
     <script src="../js/jugadores.js"></script>
     <script src="../js/estadisticas.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</body>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  </body>
 </html>

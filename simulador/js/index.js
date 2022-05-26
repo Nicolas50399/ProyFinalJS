@@ -12,7 +12,7 @@ function asignarNombreClub(nombre){
 //Funcion que pide datos del dueño y modifica etiquetas HTML
 function asignarDatosDueño(nombre, plata){
     let nombreD = document.querySelector(".nombreDueño");
-    nombreD.innerText = "Nombre: " + nombre;
+    nombreD.innerText = "Dueño: " + nombre;
 
     let plataD = document.querySelector(".plataDueño");
     plataD.innerText = "Fondos: $" + plata;
@@ -122,14 +122,22 @@ function validarFormularioJugador(e){
     edad = document.querySelector("#edadJug").value;
     posicion = document.querySelector("#posicionJug").value;
     sueldo = document.querySelector("#sueldoJug").value;
-    if(nombre!="" && edad!="" && posicion!="" && sueldo!=""){
+    if(nombre!="" && edad!="" && posicion!="" && sueldo!="" && !(posicion!=1 && posicion!=2 && posicion!=3 && posicion!=4)){
         
         borrarContenidoFormJugador();
 
     (parseInt(sueldoDisponible) >= parseInt(sueldo)) ? listarIngresante() : saldoInsuficiente();
     }
     else{
-        alert("Error, faltan datos del jugador");
+        Toastify({
+            text: `Error: datos erróneos del jugador`,
+            duration: 3000,
+            gravity: 'bottom',
+            position: 'left',
+            style: {
+                background: 'linear-gradient(to right, #DC0707, #EE5959)'
+            }
+        }).showToast();
     }
 }
 
@@ -264,11 +272,6 @@ function jugadoresInsuficientes(){
 
 
 
-//Funcion que recibe un array de objetos clase "Jugador" y devuelve sus respectivos nombres
-function nombres(arrayJugadores){
-    return arrayJugadores.map((unJugador) => unJugador.nombre);
-}
-
 
 //Funcion que recibe un array de objetos clase "Jugador" y devuelve sus respectivos sueldos
 function sueldos(arrayJugadores){
@@ -303,79 +306,10 @@ function salarioTotal(arraySueldos){
 }
 
 
-//Funcion que recibe un nombre y un array de jugadores, que devuelve el jugador que coincida con el nombre puesto
-function buscarJugadorPorNombre(arrayJugadores, nomb){
-    return arrayJugadores.find(unJugador => unJugador.nombre == nomb);
-}
-
-
 
 
 function guardarDatos(){
-    
-    Swal.fire({
-        title: '¿Está seguro que desea confirmar el equipo?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, seguro',
-        cancelButtonText: 'No'
-    }).then((result) => {
-
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: '¡Confirmado!',
-                icon: 'success',
-                text: 'El equipo ha sido confirmado'
-            })
-        }
-    })
     localStorage.setItem("ingresantes", JSON.stringify(ingresantes));
-}
-
-
-//Funcion que muestra estadisticas de un jugador que se ingrese por teclado
-function estadisticaParticular(){
-    let jugador = prompt("¿Desea ver el informe de un jugador particular? Ingrese su nombre. De lo contrario, no ingrese nada: \n\n" +
-                        "JUGADORES: " + nombres(jugadores).join(" - "));
-    
-    while(jugador!=""){//Para interrumpir el ciclo, no se debe ingresar nada en el nombre del siguiente jugador
-        while(jugador != "" && !(nombres(jugadores).includes(jugador))){
-            alert("ERROR, el nombre ingresado no se encuentra en el sistema");
-            jugador = prompt("¿Desea ver el informe de un jugador particular? Ingrese su nombre. De lo contrario, no ingrese nada: \n\n" +
-            "JUGADORES: " + nombres(jugadores).join(" - "));
-        }
-
-        let jugadorBuscado = buscarJugadorPorNombre(jugadores, jugador);
-
-        let informe = "Nombre: " + jugadorBuscado.nombre + "\n" + 
-                "Edad: " + jugadorBuscado.edad + "\n" + 
-                "Posicion: " + jugadorBuscado.posicion + "\n" + 
-                "Partidos: " + jugadorBuscado.partidos + "\n" + 
-                "Promedio: " + jugadorBuscado.promedio + "\n" + 
-                "Sueldo: $" + jugadorBuscado.sueldo + "\n" + 
-                "Infracciones: " + jugadorBuscado.infracciones + "\n\n";
-
-        let rendidor = nombres(rendidores).includes(jugador);
-        if(rendidor){
-            informe += "Rendidor: SI\n";
-        }
-        else informe += "Rendidor: NO\n";
-
-        let infractor = nombres(infractores).includes(jugador);
-        if(infractor){
-            informe += "Infractor: SI\n";
-        }
-        else informe += "Infractor: NO\n";
-
-        let estrella = nombres(estrellas).includes(jugador);
-        if(estrella){
-            informe += "Estrella: SI";
-        }
-        else informe += "Estrella: NO";
-
-        alert(informe);
-        jugador = prompt("¿Desea ver el informe de un jugador particular? Ingrese su nombre. De lo contrario, no ingrese nada: ");
-    }
 }
 
 
@@ -392,7 +326,6 @@ borrarJugador();
 
 
 
-//estadisticaParticular();
 
 let botonTerminarJugadores = document.querySelector("#botonConfirmarJugs");
 botonTerminarJugadores.addEventListener("click", guardarDatos);

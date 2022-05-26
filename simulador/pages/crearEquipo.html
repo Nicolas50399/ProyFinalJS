@@ -23,9 +23,6 @@
                     <a class="nav-link" aria-current="page" href="../index.html">Inicio</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="nosotros.html">Nosotros</a>
-                  </li>
-                  <li class="nav-item">
                     <a class="nav-link active" href="#">Crear Equipo</a>
                   </li>
                   <li class="nav-item">
@@ -35,19 +32,13 @@
                     <a class="nav-link disabled" href="estadisticas.html">Estadísticas</a>
                   </li>
                 </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
               </div>
             </div>
           </nav>
     </header>
     <main>
         <h1 class="tituloPrincipal">CREAR EQUIPO</h1>
-        <p class="parrafo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos suscipit harum molestiae beatae officia aliquam non inventore saepe, quaerat vero ex quisquam nobis iusto. Maiores labore vel expedita non dolores.
-        Porro deserunt maxime cupiditate corrupti, fugit quia adipisci nostrum! Quo voluptatum qui eum, alias dolore hic sequi excepturi voluptatibus unde, cum non possimus dolores fuga impedit magni ducimus itaque minima.
-        Voluptas velit at atque? Dicta, praesentium expedita eveniet, ex minima quisquam voluptatum accusantium dignissimos cum, asperiores saepe quaerat facere iusto. Porro iusto et tempore impedit laboriosam, nam cumque ab placeat?
+        <p class="parrafo">Este es el primer paso de la simulación, lo que se debe hacer es crear el club, poniendole nombre, tambien el nombre del dueño y los fondos monetarios que tiene. Después de esto se crean los jugadores, con su respectivo nombre, edad, posicion y sueldo base. Para avanzar debe haber una cantidad mínima de jugadores en distintas posiciones y el sueldo total no debe ser superior a los fondos del club. También e puede eliminar un jugador marcando su id correspondiente.
         </p>
         <h2>Requerimientos mínimos para el equipo:</h2>
         <ul class="sinViñetas">
@@ -67,11 +58,14 @@
         
         
         <section id="menuModificarJugadores">
-          <h2 class="nombreEquipo">NOMBRE DEL EQUIPO</h2>
-
-          <h2>DUEÑO</h2>
-          <p class="nombreDueño">Nombre: </p>
-          <p class="plataDueño">Fondos: </p>
+          <div class="contenedorClub">
+            <div class="infoClub">
+              <h2 class="nombreEquipo">NOMBRE DEL EQUIPO</h2>
+              <h2 class="plataDueño"></h2>
+              <h2 class="nombreDueño"></h2>
+            </div>
+          </div>
+          
 
           <div id="contenedorJugadores">
             <div id="cantidades">
@@ -91,7 +85,9 @@
               <form id="formularioJugador">
                 <input id="nombreJug" class="form-control inputForm inputJugador" type="text" placeholder="Nombre del Jugador">
                 <input id="edadJug" class="form-control inputForm inputJugador" type="number" placeholder="Edad del Jugador">
-                1.ARQUERO   2.DEFENSOR   3.VOLANTE   4.DELANTERO
+                INGRESAR POSICION POR NÚMEROS
+                <br><br>
+                1: ARQUERO      |      2: DEFENSOR      |      3: VOLANTE      |      4: DELANTERO
                 <input id="posicionJug" class="form-control inputForm inputJugador" type="number" placeholder="Posicion del Jugador">
                 <input id="sueldoJug" class="form-control inputForm inputJugador" type="number" placeholder="Sueldo del Jugador">
                 <button id="botonConfirmarJug" type="button submit" class="btn btn-dark">Confirmar Jugador</button>
@@ -117,23 +113,7 @@
         </section>
     </main>
     <footer>
-        <ul class="listadoFooter">
-            <li>
-                <a href="#">Inicio</a>
-            </li>
-            <li>
-                <a href="#">Nosotros</a>
-            </li>
-            <li>
-                <a href="#">Crear Equipo</a>
-            </li>
-            <li>
-                <a href="#">Tu Equipo</a>
-            </li>
-            <li>
-                <a href="#">Estadísticas</a>
-            </li>
-        </ul>
+      @2022 Todos los derechos reservados
     </footer>
     <script src="../js/variablesGlobales.js"></script>
     <script src="../js/jugadores.js"></script>

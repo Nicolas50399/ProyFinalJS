@@ -58,6 +58,24 @@ main{
     list-style: none;
 }
 
+.listadoItem{
+    width: 100%;
+    border-radius: 2rem;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid white;
+    margin-top: 1rem;
+}
+
+.imgInicio{
+    width: 80%;
+    border-radius: 5rem;
+    padding: 10px 0;
+}
+
 .bordadoBlanco{
     border: 2px solid white;
 }
@@ -88,6 +106,20 @@ footer{
     padding: 3rem 0;
 }
 
+.contenedorClub{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoClub{
+    border: 1px solid white;
+    border-radius: 2rem;
+    margin-bottom: 5rem;
+    width: 70%;
+    background-color: black;
+}
+
 .jugadores{
     display: flex;
     flex-direction: column;
@@ -103,6 +135,7 @@ footer{
     align-items: center;
     border-radius: 1rem;
     margin-bottom: 15px;
+    background-color: black;
 }
 
 .jugadorId{
@@ -142,7 +175,6 @@ footer{
     flex-direction: column;
     align-items: center;
 }
-
 #menuModificarJugadores{
     display: none;
 }
@@ -163,15 +195,16 @@ footer{
     grid-template-columns: 30% 70%;
     grid-template-rows: 2fr auto 1fr;
     align-items: center;
+    justify-items: center;
 }
 
 #cantidades{
     grid-area: cantidades;
-    /*background-color: aqua;*/
+    margin-top: 2rem;
 }
 #formJugador{
     grid-area: formularioJ;
-    /*background-color: greenyellow;*/
+    width: 70%;
 }
 #listaJugadores{
     grid-area: listaJ;
@@ -201,9 +234,9 @@ footer{
     align-items: center;
     margin-bottom: 2rem;
 }
-.fondoGris{
+.fondoJugadores{
     background-color: black;
-    border: 2px solid white;
+    border: 1px solid white;
     width: 70%;
 }
 .mensajeNoSuplentes{
@@ -236,6 +269,10 @@ footer{
     border: 1px solid black;
 }
 #listSuplentes{
+    width: 60%;
+    background-color: rgb(58, 53, 53);
+    align-self: center;
+    justify-self: center;
     grid-area: listSuplentes;
     border: 1px solid black;
     display: flex;
@@ -312,8 +349,9 @@ footer{
     grid-area: fondosC;
 }
 
-.width10{
-    width: 10%;
+.width15{
+    width: 15%;
+    overflow-x: hidden;
 }
 
 .width30{
@@ -366,4 +404,52 @@ footer{
 
 #ordenarPor li:hover ul {
     display: inline;
+}
+
+.menuEstadisticas{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.negro{
+    color: black;
+}
+.listNone{
+    list-style: none;
+}
+
+#jugadoresDestacados{
+    display: flex;
+    justify-content: space-around;
+}
+
+.jugadorEncontrado{
+    display: flex;
+    justify-content: center;
+}
+
+#buscarEstadisticaJugador{
+    display: none;
+}
+
+#mostrarEstadisticasGrupo{
+    display: none;
+}
+
+.rojo{
+    color: red;
+}
+
+#sueldoClubResultante{
+    display: flex;
+    justify-content: center;
+}
+
+.sueldoFinalClub{
+    background-color: black;
+    width: 60%;
+    border: 2px solid white;
+    border-radius: 2rem;
+    margin-top: 5rem;
 }

@@ -15,11 +15,6 @@ document.querySelector("#fondosClub").innerHTML = `$${clubConfirmado.fondos}`;
 
 const ingresados = JSON.parse(localStorage.getItem("ingresantes"));
 
-/*function separarPorPosicion(){
-    for(const i of ingresados){
-        if(i.posicion == 1)
-    }
-}*/
 
 const arrayArqueros = ingresados.filter(unIngresado => unIngresado.posicion == 1);
 const arrayDefensores = ingresados.filter(unIngresado => unIngresado.posicion == 2);
@@ -163,20 +158,34 @@ function mostrarListaDelanteros(){
 
 function cantidadSuficiente(pos, menu){
     menu.innerHTML = `<div class="menuHorizontal"><h2>${pos}</h2>
-                    <p class="mensajeNoSuplentes">No hay suplentes disponibles</p></div>`;
-    if(arrayArqueros.length==1)document.querySelector("#botonDefensoresSup").classList.remove("disabled");
-    else if(arrayDefensores,length==4 && arrayArqueros.length==1)document.querySelector("#botonVolantesSup").classList.remove("disabled");
-    else if(arrayVolantes.length==3 && arrayArqueros.length==1 && arrayDefensores.length==4)document.querySelector("#botonDelanterosSup").classList.remove("disabled");
+                    <p class="mensajeNoSuplentes">Jugadores Suficientes</p></div>`;
+    if(arrayArqueros.length==1 && arrayDefensores.length>4)document.querySelector("#botonDefensoresSup").classList.remove("disabled");
+    else if(arrayDefensores,length==4 && arrayArqueros.length==1 && arrayVolantes.length>3)document.querySelector("#botonVolantesSup").classList.remove("disabled");
+    else if(arrayVolantes.length==3 && arrayArqueros.length==1 && arrayDefensores.length==4 &&arrayDelanteros.length>3)document.querySelector("#botonDelanterosSup").classList.remove("disabled");
 }
 
 function mandarArqueroAlBanco(e){
     e.preventDefault();
     let idArqueroElegido = document.querySelector("#inputArquerosSup").value;
-    quitarArquero(idArqueroElegido);
-    idArqueroElegido = "";
-    
-    if(arrayArqueros.length == 1){
-        document.querySelector("#botonDefensoresSup").classList.remove("disabled");
+    if(arrayArqueros.some(j => j.id == idArqueroElegido)){
+        quitarArquero(idArqueroElegido);
+        idArqueroElegido = "";
+        
+        if(arrayArqueros.length == 1){
+            document.querySelector("#botonDefensoresSup").classList.remove("disabled");
+        }
+    }
+    else {
+        document.querySelector("#inputArquerosSup").value="";
+        Toastify({
+            text: `Jugador no encontrado`,
+            duration: 3000,
+            gravity: 'bottom',
+            position: 'left',
+            style: {
+                background: 'linear-gradient(to right, #DC0707, #EE5959)'
+            }
+        }).showToast();
     }
 }
 
@@ -203,13 +212,28 @@ function posicionArqueroABorrar(id){
 function mandarDefensorAlBanco(e){
     e.preventDefault();
     let idDefensorElegido = document.querySelector("#inputDefensoresSup").value;
-    quitarDefensor(idDefensorElegido);
-    idDefensorElegido = "";
-    if(arrayDefensores.length > 4){
-        document.querySelector("#botonDefensoresSup").classList.remove("disabled");
+
+    if(arrayDefensores.some(j => j.id == idDefensorElegido)){
+        quitarDefensor(idDefensorElegido);
+        idDefensorElegido = "";
+        if(arrayDefensores.length > 4){
+            document.querySelector("#botonDefensoresSup").classList.remove("disabled");
+        }
+        if(arrayDefensores.length == 4){
+            document.querySelector("#botonVolantesSup").classList.remove("disabled");
+        }
     }
-    if(arrayDefensores.length == 4){
-        document.querySelector("#botonVolantesSup").classList.remove("disabled");
+    else {
+        document.querySelector("#inputDefensoresSup").value="";
+        Toastify({
+            text: `Jugador no encontrado`,
+            duration: 3000,
+            gravity: 'bottom',
+            position: 'left',
+            style: {
+                background: 'linear-gradient(to right, #DC0707, #EE5959)'
+            }
+        }).showToast();
     }
 }
 
@@ -236,14 +260,30 @@ function posicionDefensorABorrar(id){
 function mandarVolanteAlBanco(e){
     e.preventDefault();
     let idVolanteElegido = document.querySelector("#inputVolantesSup").value;
-    quitarVolante(idVolanteElegido);
-    idVolanteElegido = "";
-    if(arrayVolantes.length > 3){
-        document.querySelector("#botonVolantesSup").classList.remove("disabled");
+    if(arrayVolantes.some(j => j.id == idVolanteElegido)){
+        quitarVolante(idVolanteElegido);
+        idVolanteElegido = "";
+        if(arrayVolantes.length > 3){
+            document.querySelector("#botonVolantesSup").classList.remove("disabled");
+        }
+        if(arrayVolantes.length == 3){
+            document.querySelector("#botonDelanterosSup").classList.remove("disabled");
+        }
     }
-    if(arrayVolantes.length == 3){
-        document.querySelector("#botonDelanterosSup").classList.remove("disabled");
+    else {
+        document.querySelector("#inputVolantesSup").value="";
+        Toastify({
+            text: `Jugador no encontrado`,
+            duration: 3000,
+            gravity: 'bottom',
+            position: 'left',
+            style: {
+                background: 'linear-gradient(to right, #DC0707, #EE5959)'
+            }
+        }).showToast();
     }
+
+    
 }
 
 function quitarVolante(id){
@@ -269,14 +309,31 @@ function posicionVolanteABorrar(id){
 function mandarDelanteroAlBanco(e){
     e.preventDefault();
     let idDelanteroElegido = document.querySelector("#inputDelanterosSup").value;
-    quitarDelantero(idDelanteroElegido);
-    idDelanteroElegido = "";
-    if(arrayDelanteros.length > 3){
-        document.querySelector("#botonDelanterosSup").classList.remove("disabled");
+
+    if(arrayDelanteros.some(j => j.id == idDelanteroElegido)){
+        quitarDelantero(idDelanteroElegido);
+        idDelanteroElegido = "";
+        if(arrayDelanteros.length > 3){
+            document.querySelector("#botonDelanterosSup").classList.remove("disabled");
+        }
+        if(arrayDelanteros.length == 3){
+            document.querySelector("#botonConfirmarSuplentes").classList.remove("disabled");
+        }
     }
-    if(arrayDelanteros.length == 3){
-        document.querySelector("#botonConfirmarSuplentes").classList.remove("disabled");
+    else {
+        document.querySelector("#inputDelanterosSup").value="";
+        Toastify({
+            text: `Jugador no encontrado`,
+            duration: 3000,
+            gravity: 'bottom',
+            position: 'left',
+            style: {
+                background: 'linear-gradient(to right, #DC0707, #EE5959)'
+            }
+        }).showToast();
     }
+
+    
 }
 
 function quitarDelantero(id){
@@ -448,12 +505,18 @@ function actualizarDatosTitular(titular, cantPartidos){
     promedioTitular = (Math.floor(Math.random() * (100-70+1)) + 70) / 10;
     infraccionesTitular = Math.floor(Math.random() * (Math.floor(cantPartidos / 7)));
 
-    const jugTitular = new Jugador(titular.id, titular.nombre, parseInt(titular.edad), titular.posicion, parseInt(cantPartidos), promedioTitular, titular.sueldo, infraccionesTitular);
     sueldoResultante = parseInt(titular.sueldo);
-    recompensarPorRendimiento(jugTitular, sueldoResultante);
+    if(buenRendimiento(titular, promedioTitular, cantPartidos)){
+        sueldoResultante += sueldoResultante * 0.3;
+    }
+    if(esJoven(titular)){
+        sueldoResultante += sueldoResultante * 0.15;
+    }
+
     sueldoResultante = restarPorInfracciones(sueldoResultante, infraccionesTitular);
     const jugTitularActualizado = new Jugador(titular.id, titular.nombre, parseInt(titular.edad), titular.posicion, parseInt(cantPartidos), promedioTitular, sueldoResultante, infraccionesTitular);
     jugadores.push(jugTitularActualizado);
+    console.log(sueldoResultante);
 }
 
 function actualizarSuplentes(cantPartidos){
@@ -464,9 +527,14 @@ function actualizarDatosSuplentes(suplente, cantPartidos){
     promedioSuplente = (Math.floor(Math.random() * (100-50+1)) + 50) / 10;
     infraccionesSuplente = Math.floor(Math.random() * (Math.floor(cantPartidos / 5)));
 
-    const jugSuplente = new Jugador(suplente.id, suplente.nombre, parseInt(suplente.edad), suplente.posicion, parseInt(cantPartidos), promedioSuplente, suplente.sueldo, infraccionesSuplente);
-    sueldoResultante = suplente.sueldo;
-    recompensarPorRendimiento(jugSuplente, sueldoResultante);
+    sueldoResultante = parseInt(suplente.sueldo);
+    if(buenRendimiento(suplente, promedioSuplente, cantPartidos)){
+        sueldoResultante += sueldoResultante * 0.3;
+    }
+    if(esJoven(suplente)){
+        sueldoResultante += sueldoResultante * 0.15;
+    }
+
     sueldoResultante = restarPorInfracciones(sueldoResultante, infraccionesSuplente);
     const jugSuplenteActualizado = new Jugador(suplente.id, suplente.nombre, parseInt(suplente.edad), suplente.posicion, parseInt(cantPartidos), promedioSuplente, sueldoResultante, infraccionesSuplente);
     jugadores.push(jugSuplenteActualizado);
@@ -474,19 +542,32 @@ function actualizarDatosSuplentes(suplente, cantPartidos){
 
 
 //Funcion que aumenta el salario si el jugador tuvo buen rendimiento
+
 function recompensarPorRendimiento(unJugador, sueldoRes){
     if(buenRendimiento(unJugador)){
         console.log("FUNCIONA");
-        sueldoRes += agregarBonoRendimiento(sueldoRes);
-        esJoven(unJugador) && (sueldoRes = agregarBonoJuventud(sueldoRes));
+        sueldoResultante += agregarBonoRendimiento(sueldoResultante);
+        esJoven(unJugador) && (sueldoResultante = agregarBonoJuventud(sueldoResultante));
     }
 }
 
-function buenRendimiento(jug){
-    if(jug.posicion == 1) return (jug.partidos >= 20 && jug.promedio >= 8.0);
-    else if(jug.posicion == 2)return (jug.partidos >= 10 && jug.promedio >= 9.0);
-    else if(jug.posicion == 3)return (jug.partidos >= 15 && jug.promedio >= 7.5);
-    else return (jug.partidos >= 25 && jug.promedio >= 8.5);
+function buenRendimiento(jug, promedio, partidos){
+    if(jug.posicion == 1){
+        console.log("ARQUERO");
+        return (partidos >= 20 && promedio >= 8);
+    }
+    else if(jug.posicion == 2){
+        console.log("DEFENSOR");
+        return (partidos >= 10 && promedio >= 9);
+    }
+    else if(jug.posicion == 3){
+        console.log("VOLANTE");
+        return (partidos >= 15 && promedio >= 7);
+    }
+    else {
+        console.log("DELANTERO");
+        return (partidos >= 25 && promedio >= 8);
+    }
 }
 
 function esJoven(jug){
@@ -501,4 +582,4 @@ const agregarBonoRendimiento = (salario) => salario + salario * 0.3;
 
 const agregarBonoJuventud = (salario) => salario + salario * 0.15;
 
-const restarPorInfracciones = (salario, faltas) => salario - 4000 * faltas;
+const restarPorInfracciones = (salario, faltas) => salario - 2000 * faltas;
